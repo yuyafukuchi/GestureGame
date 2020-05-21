@@ -434,6 +434,16 @@ function detectPoseInRealTime(video, net) {
         if (guiState.output.showBoundingBox) {
           drawBoundingBox(keypoints, ctx);
         }
+
+        // 右目が左によると、色が赤に変わる
+        ctx.beginPath();
+        ctx.arc(120, 120, 100, 0, 2 * Math.PI);
+        if (keypoints[2].score > 0.8 && keypoints[2].position.x <= 300) {
+          ctx.fillStyle = 'red';
+        } else {
+          ctx.fillStyle = 'white';
+        }
+        ctx.fill();
       }
     });
 
