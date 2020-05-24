@@ -17,7 +17,8 @@
 import * as posenet from '@tensorflow-models/posenet';
 import dat from 'dat.gui';
 import Stats from 'stats.js';
-
+import {isInCircle} from './util.js';
+// eslint-disable-next-line max-len
 import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
 
 const videoWidth = 600;
@@ -438,7 +439,14 @@ function detectPoseInRealTime(video, net) {
         // 右目が左によると、色が赤に変わる
         ctx.beginPath();
         ctx.arc(120, 120, 100, 0, 2 * Math.PI);
-        if (keypoints[2].score > 0.8 && keypoints[2].position.x <= 300) {
+        let circle = {
+          x: 120,
+          y: 120,
+          r: 100,
+        };
+        if (keypoints[2].score > 0.8
+          && isInCircle(circle, keypoints[2].position)
+        ) {
           ctx.fillStyle = 'red';
         } else {
           ctx.fillStyle = 'white';
