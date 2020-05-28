@@ -488,26 +488,14 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet) {
         if (guiState.output.showBoundingBox) {
           drawBoundingBox(keypoints, ctx);
         }
-
-        ctx.beginPath();
-        ctx.arc(120, 120, 100, 0, 2 * Math.PI);
         let circle =new utils.Circle(120,120,100);
-        // 右目が円内に入ると、色が赤に変わる
-        // 検知の信頼性を担保するために閾値を0.8で指定
-        if (keypoints[2].score > 0.8
-          && utils.isInCircle(circle, keypoints[2].position)
-        ) {
-          ctx.fillStyle = 'red';
-        } else {
-          ctx.fillStyle = 'white';
-        }
-        ctx.fill();
+
+        utils.addCircle(ctx,circle);
       }
     });
 
     // End monitoring code for frames per second
     stats.end();
-
     requestAnimationFrame(poseDetectionFrame);
   }
 
