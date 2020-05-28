@@ -434,17 +434,6 @@ function detectPoseInRealTime(video, net) {
         if (guiState.output.showBoundingBox) {
           drawBoundingBox(keypoints, ctx);
         }
-
-        // これ、触れたら色を変えるとか
-        ctx.beginPath();
-        ctx.arc(120, 120, 100, 0, 2 * Math.PI);
-        // ctx.drawImage(virus, 0, 0);
-        if (keypoints[2].score > 0.8 && keypoints[2].position.x <= 300) {
-          ctx.fillStyle = 'red';
-        } else {
-          ctx.fillStyle = 'white';
-        }
-        ctx.fill();
       }
     });
 
