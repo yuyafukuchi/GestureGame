@@ -17,7 +17,8 @@
 import * as posenet from '@tensorflow-models/posenet';
 import * as posenet_types from '@tensorflow-models/posenet/dist/types';
 import * as dat from 'dat.gui'
-import Stats= require('stats.js')
+import * as utils from "./util"
+import Stats = require('stats.js')
 
 import { drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss } from './demo_util';
 
@@ -490,15 +491,11 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet) {
 
         ctx.beginPath();
         ctx.arc(120, 120, 100, 0, 2 * Math.PI);
-        let circle = {
-          x: 120,
-          y: 120,
-          r: 100,
-        };
+        let circle =new utils.Circle(120,120,100);
         // 右目が円内に入ると、色が赤に変わる
         // 検知の信頼性を担保するために閾値を0.8で指定
         if (keypoints[2].score > 0.8
-          && isInCircle(circle, keypoints[2].position)
+          && utils.isInCircle(circle, keypoints[2].position)
         ) {
           ctx.fillStyle = 'red';
         } else {
