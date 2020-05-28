@@ -490,11 +490,9 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
         if (guiState.output.showBoundingBox) {
           drawBoundingBox(keypoints, ctx);
         }
-
-        gameState.update(null, ctx);
       }
     });
-
+    gameState.update(null, ctx);
     // End monitoring code for frames per second
     stats.end();
 
