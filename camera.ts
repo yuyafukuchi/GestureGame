@@ -489,6 +489,30 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet) {
           drawBoundingBox(keypoints, ctx);
         }
 
+        
+        // 境界線を追加する
+        var allow_range = 50
+        var center = videoWidth/2
+      
+        // 中心にいるのかを検知
+        var nose_point = keypoints[0]
+        if (!(nose_point.score > 0.8
+          && utils.isInCenterLine(center, allow_range, nose_point.position))){
+            ctx.beginPath();
+            ctx.moveTo(center - allow_range, 0);
+            ctx.lineTo(center - allow_range, videoHeight);
+            ctx.closePath();
+            ctx.stroke();
+    
+            ctx.beginPath();
+            ctx.moveTo(center + allow_range, 0);
+            ctx.lineTo(center + allow_range, videoHeight);
+            ctx.closePath();
+            ctx.stroke();
+
+            ctx.fillText("二つの線の間に移動してください", center, 50);
+          }
+
         ctx.beginPath();
         ctx.arc(120, 120, 100, 0, 2 * Math.PI);
         let circle =new utils.Circle(120,120,100);
