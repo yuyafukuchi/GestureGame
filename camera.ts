@@ -509,7 +509,8 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet) {
             ctx.lineTo(center + allow_range, videoHeight);
             ctx.closePath();
             ctx.stroke();
-
+            
+            ctx.textAlign = "center";
             ctx.fillText("二つの線の間に移動してください", center, 50);
           }
 
