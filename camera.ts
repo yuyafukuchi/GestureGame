@@ -78,45 +78,7 @@ const defaultResNetMultiplier = 1.0;
 const defaultResNetStride = 32;
 const defaultResNetInputResolution = 250;
 
-const guiState: PredictionGuiState = {
-  algorithm: 'multi-pose',
-  input: {
-    architecture: 'MobileNetV1',
-    outputStride: defaultMobileNetStride,
-    inputResolution: defaultMobileNetInputResolution,
-    multiplier: defaultMobileNetMultiplier,
-    quantBytes: defaultQuantBytes
-  },
-  singlePoseDetection: {
-    minPoseConfidence: 0.1,
-    minPartConfidence: 0.5,
-  },
-  multiPoseDetection: {
-    maxPoseDetections: 5,
-    minPoseConfidence: 0.15,
-    minPartConfidence: 0.1,
-    nmsRadius: 30.0,
-  },
-  output: {
-    showVideo: true,
-    showSkeleton: true,
-    showPoints: true,
-    showBoundingBox: false,
-  },
-  net: <posenet.PoseNet>null,
-  camera: null,
-  multiplier: null,
-  changeToMultiplier: null,
-  inputResolution: null,
-  changeToInputResolution: null,
-  outputStride: null,
-  changeToOutputStride: null,
-  architecture: null,
-  changeToArchitecture: null,
-  quantBytes: null,
-  changeToQuantBytes: null,
-  tryResNetButton: null,
-};
+const guiState = PredictionGuiState.Default;
 
 /**
  * Sets up dat.gui controller on the top-right of the window
