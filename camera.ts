@@ -21,7 +21,7 @@ import * as utils from "./util"
 import { PredictionGuiState } from './PredictionGuiState'
 import Stats = require('stats.js')
 
-import { drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss } from './demo_util';
+import { drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI } from './demo_util';
 import { Duration } from './Target';
 import { GameState } from './GameState'
 
@@ -92,13 +92,6 @@ function setupGui(cameras: any[], net: posenet.PoseNet) {
 
   const gui = new dat.GUI({ width: 300 });
 
-  let architectureController: dat.GUIController = null;
-  guiState[tryResNetButtonName] = function () {
-    architectureController.setValue('ResNet50')
-  };
-  gui.add(guiState, tryResNetButtonName).name(tryResNetButtonText);
-  updateTryResNetButtonDatGuiCss();
-
   // The single-pose algorithm is faster and simpler but requires only one
   // person to be in the frame or results will be innaccurate. Multi-pose works
   // for more than 1 person
@@ -111,7 +104,7 @@ function setupGui(cameras: any[], net: posenet.PoseNet) {
   // Architecture: there are a few PoseNet models varying in size and
   // accuracy. 1.01 is the largest, but will be the slowest. 0.50 is the
   // fastest, but least accurate.
-  architectureController =
+  let architectureController =
     input.add(guiState.input, 'architecture', ['MobileNetV1', 'ResNet50']);
   guiState.architecture = guiState.input.architecture;
   // Input resolution:  Internally, this parameter affects the height and width
@@ -227,10 +220,8 @@ function setupGui(cameras: any[], net: posenet.PoseNet) {
   multi.open();
 
   let output = gui.addFolder('Output');
-  output.add(guiState.output, 'showVideo');
   output.add(guiState.output, 'showSkeleton');
   output.add(guiState.output, 'showPoints');
-  output.add(guiState.output, 'showBoundingBox');
   output.open();
 
 
@@ -391,13 +382,12 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
 
     ctx.clearRect(0, 0, videoWidth, videoHeight);
 
-    if (guiState.output.showVideo) {
-      ctx.save();
-      ctx.scale(-1, 1);
-      ctx.translate(-videoWidth, 0);
-      ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
-      ctx.restore();
-    }
+    // Show video
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.translate(-videoWidth, 0);
+    ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+    ctx.restore();
 
     // For each pose (i.e. person) detected in an image, loop through the poses
     // and draw the resulting skeleton and keypoints if over certain confidence
@@ -409,9 +399,6 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
         }
         if (guiState.output.showSkeleton) {
           drawSkeleton(keypoints, minPartConfidence, ctx);
-        }
-        if (guiState.output.showBoundingBox) {
-          drawBoundingBox(keypoints, ctx);
         }
       }
     });

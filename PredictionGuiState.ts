@@ -57,22 +57,16 @@ class InputConfig {
 }
 
 class OutputConfig {
-    showVideo: boolean;
     showSkeleton: boolean;
     showPoints: boolean;
-    showBoundingBox: boolean;
     public static get Default(): OutputConfig {
         let ret = new OutputConfig();
-        ret.showVideo = true;
         ret.showSkeleton = true;
         ret.showPoints = true;
-        ret.showBoundingBox = false;
 
         return ret;
     }
-
 }
-
 
 class SinglePoseDetectionConfig {
     minPoseConfidence: number;
