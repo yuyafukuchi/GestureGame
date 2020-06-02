@@ -18,11 +18,12 @@ import * as posenet from '@tensorflow-models/posenet';
 import * as posenet_types from '@tensorflow-models/posenet/dist/types';
 import * as dat from 'dat.gui'
 import * as utils from "./util"
-import { GameState } from './GameState'
+import { PredictionGuiState } from './PredictionGuiState'
 import Stats = require('stats.js')
 
 import { drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss } from './demo_util';
 import { Duration } from './Target';
+import { GameState } from './GameState'
 
 const videoWidth = 600;
 const videoHeight = 500;
@@ -77,47 +78,7 @@ const defaultResNetMultiplier = 1.0;
 const defaultResNetStride = 32;
 const defaultResNetInputResolution = 250;
 
-class GuiState {
-  algorithm: string;
-  input: {
-    architecture: posenet_types.PoseNetArchitecture;
-    outputStride: posenet.PoseNetOutputStride;
-    inputResolution: posenet.InputResolution;
-    multiplier: posenet.MobileNetMultiplier;
-    quantBytes: posenet_types.PoseNetQuantBytes;
-  };
-  singlePoseDetection: {
-    minPoseConfidence: number;
-    minPartConfidence: number;
-  };
-  multiPoseDetection: {
-    maxPoseDetections: number;
-    minPoseConfidence: number;
-    minPartConfidence: number;
-    nmsRadius: number;
-  };
-  output: {
-    showVideo: boolean;
-    showSkeleton: boolean;
-    showPoints: boolean;
-    showBoundingBox: boolean;
-  };
-  net: posenet.PoseNet;
-  camera: string;
-  multiplier: posenet.MobileNetMultiplier;
-  changeToMultiplier: posenet.MobileNetMultiplier;
-  inputResolution: posenet.InputResolution;
-  changeToInputResolution: posenet.InputResolution;
-  outputStride: posenet.PoseNetOutputStride;
-  changeToOutputStride: posenet.PoseNetOutputStride;
-  architecture: posenet_types.PoseNetArchitecture;
-  changeToArchitecture: posenet_types.PoseNetArchitecture;
-  quantBytes: posenet_types.PoseNetQuantBytes;
-  changeToQuantBytes: posenet_types.PoseNetQuantBytes;
-  tryResNetButton: any;
-}
-
-const guiState: GuiState = {
+const guiState: PredictionGuiState = {
   algorithm: 'multi-pose',
   input: {
     architecture: 'MobileNetV1',
