@@ -18,9 +18,11 @@ import * as posenet from '@tensorflow-models/posenet';
 import * as posenet_types from '@tensorflow-models/posenet/dist/types';
 import * as dat from 'dat.gui'
 import * as utils from "./util"
+import { GameState } from './GameState'
 import Stats = require('stats.js')
 
 import { drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss } from './demo_util';
+import { Duration } from './Target';
 
 const videoWidth = 600;
 const videoHeight = 500;
@@ -341,7 +343,7 @@ function setupFPS() {
  * Feeds an image to posenet to estimate poses - this is where the magic
  * happens. This function loops with a requestAnimationFrame method.
  */
-function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet) {
+function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gameState: GameState) {
   const canvas = <HTMLCanvasElement>document.getElementById('output');
   const ctx = canvas.getContext('2d');
 
@@ -488,23 +490,9 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet) {
         if (guiState.output.showBoundingBox) {
           drawBoundingBox(keypoints, ctx);
         }
-
-        ctx.beginPath();
-        ctx.arc(120, 120, 100, 0, 2 * Math.PI);
-        let circle =new utils.Circle(120,120,100);
-        // 右目が円内に入ると、色が赤に変わる
-        // 検知の信頼性を担保するために閾値を0.8で指定
-        if (keypoints[2].score > 0.8
-          && utils.isInCircle(circle, keypoints[2].position)
-        ) {
-          ctx.fillStyle = 'red';
-        } else {
-          ctx.fillStyle = 'white';
-        }
-        ctx.fill();
       }
     });
-
+    gameState.update(null, ctx);
     // End monitoring code for frames per second
     stats.end();
 
@@ -543,7 +531,24 @@ export async function bindPage() {
 
   setupGui([], net);
   setupFPS();
-  detectPoseInRealTime(video, net);
+  let gameState = new GameState()
+
+  for (let i = 1; i < 10; i++) {
+    const centerX = 300;
+    const centerY = 275;
+    const alignR = 240;
+    const durations = [
+      new Duration(0 + 500 * i, 500),
+      new Duration(5000 + 500 * i, 500),
+      new Duration(10000 + 500 * i, 500),
+      new Duration(15000 + 500 * i, 500),
+      new Duration(20000 + 500 * i, 500),
+      new Duration(25000 + 500 * i, 500),
+    ];
+    gameState.addTarget(new utils.Circle(centerX - alignR * Math.sin(Math.PI / 5 * i), centerY + alignR * Math.cos(Math.PI / 5 * i), 30), durations);
+  }
+  gameState.start();
+  detectPoseInRealTime(video, net, gameState);
 }
 
 navigator.getUserMedia = navigator.getUserMedia;
