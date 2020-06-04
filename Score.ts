@@ -15,7 +15,7 @@ export class Event {
     }
 
     // 得点を返す
-    public touched(): number {
+    public onTouched(): number {
         // 既にタッチされている場合
         if (this.isTouched) {
             return 0
