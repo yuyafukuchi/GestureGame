@@ -87,7 +87,8 @@ export function drawSkeleton(keypoints: posenet.Keypoint[], minConfidence: numbe
  * Draw pose keypoints onto a canvas
  */
 export function drawKeypoints(keypoints: posenet.Keypoint[], minConfidence: number, ctx: CanvasRenderingContext2D, scale = 1) {
-  for (let i = 0; i < keypoints.length; i++) {
+  // Do not draw keypoints of eyes, ears and nose
+  for (let i = 5; i < keypoints.length; i++) {
     const keypoint = keypoints[i];
 
     if (keypoint.score < minConfidence) {
