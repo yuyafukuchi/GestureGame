@@ -481,18 +481,18 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
     // scores
     poses.forEach(({ score, keypoints }) => {
       if (score >= minPoseConfidence) {
-        if (guiState.output.showPoints) {
-          drawKeypoints(keypoints, minPartConfidence, ctx);
-        }
-        if (guiState.output.showSkeleton) {
-          drawSkeleton(keypoints, minPartConfidence, ctx);
-        }
+        // if (guiState.output.showPoints) {
+        //   drawKeypoints(keypoints, minPartConfidence, ctx);
+        // }
+        // if (guiState.output.showSkeleton) {
+        //   drawSkeleton(keypoints, minPartConfidence, ctx);
+        // }
         if (guiState.output.showBoundingBox) {
           drawBoundingBox(keypoints, ctx);
         }
-        let circle =new utils.Circle(120,120,100);
+        // let circle =new utils.Circle(120,120,100);
 
-        utils.addCircle(ctx,circle);
+        // utils.addCircle(ctx,circle);
       }
     });
     gameState.update(null, ctx);
