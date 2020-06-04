@@ -18,13 +18,7 @@ import * as posenet from '@tensorflow-models/posenet';
 import { Tuple } from '@tensorflow-models/posenet/dist/keypoints';
 
 const color = 'aqua';
-const boundingBoxColor = 'red';
 const lineWidth = 2;
-
-export const tryResNetButtonName = 'tryResNetButton';
-export const tryResNetButtonText = '[New] Try ResNet50';
-const tryResNetButtonTextCss = 'width:100%;text-decoration:underline;';
-const tryResNetButtonBackgroundCss = 'background:#e61d5f;';
 
 function isAndroid() {
   return /Android/i.test(navigator.userAgent);
@@ -36,27 +30,6 @@ function isiOS() {
 
 export function isMobile() {
   return isAndroid() || isiOS();
-}
-
-function setDatGuiPropertyCss(propertyText: string, liCssString: string, spanCssString: string = '') {
-  var spans = document.getElementsByClassName('property-name');
-  for (var i = 0; i < spans.length; i++) {
-    var span = <HTMLSpanElement>spans[i]
-    var text = spans[i].textContent || span.innerText;
-    if (text == propertyText) {
-      let grandParent = <HTMLElement>span.parentNode.parentNode;
-      grandParent.setAttribute('style', liCssString);
-      if (spanCssString !== '') {
-        span.setAttribute('style', spanCssString);
-      }
-    }
-  }
-}
-
-export function updateTryResNetButtonDatGuiCss() {
-  setDatGuiPropertyCss(
-    tryResNetButtonText, tryResNetButtonBackgroundCss,
-    tryResNetButtonTextCss);
 }
 
 /**
@@ -124,22 +97,6 @@ export function drawKeypoints(keypoints: posenet.Keypoint[], minConfidence: numb
     const { y, x } = keypoint.position;
     drawPoint(ctx, y * scale, x * scale, 3, color);
   }
-}
-
-/**
- * Draw the bounding box of a pose. For example, for a whole person standing
- * in an image, the bounding box will begin at the nose and extend to one of
- * ankles
- */
-export function drawBoundingBox(keypoints: posenet.Keypoint[], ctx: CanvasRenderingContext2D) {
-  const boundingBox = posenet.getBoundingBox(keypoints);
-
-  ctx.rect(
-    boundingBox.minX, boundingBox.minY, boundingBox.maxX - boundingBox.minX,
-    boundingBox.maxY - boundingBox.minY);
-
-  ctx.strokeStyle = boundingBoxColor;
-  ctx.stroke();
 }
 
 /**
