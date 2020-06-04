@@ -1,4 +1,4 @@
-import * as posenet_types from '@tensorflow-models/posenet/dist/types';
+import { Vector2D } from '@tensorflow-models/posenet/dist/types';
 
 export class Circle {
     public x: number;
@@ -10,22 +10,17 @@ export class Circle {
         this.y = y;
         this.r = r;
     }
-}
 
-// circle{
-//     x: ,
-//     y: ,
-//     r: ,
-// }
-// point{
-//     x: ,
-//     y: ,
-// }
-export function isInCircle(circle: Circle, point: posenet_types.Vector2D): boolean {
-    // 中心位置の距離
-    // eslint-disable-next-line max-len
-    let distance = Math.sqrt(Math.pow(circle.x - point.x, 2) + Math.pow(circle.y - point.y, 2));
-    return distance <= circle.r;
+    public IsAnyInCircle(points: Array<Vector2D>): boolean {
+        for (let i = 0; i < points.length; i++) {
+            const point = points[i];
+            if (Math.sqrt(Math.pow(this.x - point.x, 2) + Math.pow(this.y - point.y, 2)) < this.r) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 
 export function addCircle(ctx: CanvasRenderingContext2D, circle: utils.Circle) {

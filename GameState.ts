@@ -17,7 +17,7 @@ export class GameState {
         const gameTime = performance.now() - this.startTime;
 
         this.targets.forEach(target => {
-            target.render(ctx, null, gameTime);
+            target.render(ctx, points, gameTime);
         });
     }
 

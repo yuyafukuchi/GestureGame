@@ -18,11 +18,12 @@ import * as posenet from '@tensorflow-models/posenet';
 import * as posenet_types from '@tensorflow-models/posenet/dist/types';
 import * as dat from 'dat.gui'
 import * as utils from "./util"
-import { GameState } from './GameState'
+import { PredictionGuiState } from './PredictionGuiState'
 import Stats = require('stats.js')
 
-import { drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss } from './demo_util';
+import { drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI } from './demo_util';
 import { Duration } from './Target';
+import { GameState } from './GameState'
 
 const videoWidth = 600;
 const videoHeight = 500;
@@ -77,85 +78,7 @@ const defaultResNetMultiplier = 1.0;
 const defaultResNetStride = 32;
 const defaultResNetInputResolution = 250;
 
-class GuiState {
-  algorithm: string;
-  input: {
-    architecture: posenet_types.PoseNetArchitecture;
-    outputStride: posenet.PoseNetOutputStride;
-    inputResolution: posenet.InputResolution;
-    multiplier: posenet.MobileNetMultiplier;
-    quantBytes: posenet_types.PoseNetQuantBytes;
-  };
-  singlePoseDetection: {
-    minPoseConfidence: number;
-    minPartConfidence: number;
-  };
-  multiPoseDetection: {
-    maxPoseDetections: number;
-    minPoseConfidence: number;
-    minPartConfidence: number;
-    nmsRadius: number;
-  };
-  output: {
-    showVideo: boolean;
-    showSkeleton: boolean;
-    showPoints: boolean;
-    showBoundingBox: boolean;
-  };
-  net: posenet.PoseNet;
-  camera: string;
-  multiplier: posenet.MobileNetMultiplier;
-  changeToMultiplier: posenet.MobileNetMultiplier;
-  inputResolution: posenet.InputResolution;
-  changeToInputResolution: posenet.InputResolution;
-  outputStride: posenet.PoseNetOutputStride;
-  changeToOutputStride: posenet.PoseNetOutputStride;
-  architecture: posenet_types.PoseNetArchitecture;
-  changeToArchitecture: posenet_types.PoseNetArchitecture;
-  quantBytes: posenet_types.PoseNetQuantBytes;
-  changeToQuantBytes: posenet_types.PoseNetQuantBytes;
-  tryResNetButton: any;
-}
-
-const guiState: GuiState = {
-  algorithm: 'multi-pose',
-  input: {
-    architecture: 'MobileNetV1',
-    outputStride: defaultMobileNetStride,
-    inputResolution: defaultMobileNetInputResolution,
-    multiplier: defaultMobileNetMultiplier,
-    quantBytes: defaultQuantBytes
-  },
-  singlePoseDetection: {
-    minPoseConfidence: 0.1,
-    minPartConfidence: 0.5,
-  },
-  multiPoseDetection: {
-    maxPoseDetections: 5,
-    minPoseConfidence: 0.15,
-    minPartConfidence: 0.1,
-    nmsRadius: 30.0,
-  },
-  output: {
-    showVideo: true,
-    showSkeleton: true,
-    showPoints: true,
-    showBoundingBox: false,
-  },
-  net: <posenet.PoseNet>null,
-  camera: null,
-  multiplier: null,
-  changeToMultiplier: null,
-  inputResolution: null,
-  changeToInputResolution: null,
-  outputStride: null,
-  changeToOutputStride: null,
-  architecture: null,
-  changeToArchitecture: null,
-  quantBytes: null,
-  changeToQuantBytes: null,
-  tryResNetButton: null,
-};
+const guiState = PredictionGuiState.Default;
 
 /**
  * Sets up dat.gui controller on the top-right of the window
@@ -169,13 +92,6 @@ function setupGui(cameras: any[], net: posenet.PoseNet) {
 
   const gui = new dat.GUI({ width: 300 });
 
-  let architectureController: dat.GUIController = null;
-  guiState[tryResNetButtonName] = function () {
-    architectureController.setValue('ResNet50')
-  };
-  gui.add(guiState, tryResNetButtonName).name(tryResNetButtonText);
-  updateTryResNetButtonDatGuiCss();
-
   // The single-pose algorithm is faster and simpler but requires only one
   // person to be in the frame or results will be innaccurate. Multi-pose works
   // for more than 1 person
@@ -188,7 +104,7 @@ function setupGui(cameras: any[], net: posenet.PoseNet) {
   // Architecture: there are a few PoseNet models varying in size and
   // accuracy. 1.01 is the largest, but will be the slowest. 0.50 is the
   // fastest, but least accurate.
-  architectureController =
+  let architectureController =
     input.add(guiState.input, 'architecture', ['MobileNetV1', 'ResNet50']);
   guiState.architecture = guiState.input.architecture;
   // Input resolution:  Internally, this parameter affects the height and width
@@ -304,10 +220,8 @@ function setupGui(cameras: any[], net: posenet.PoseNet) {
   multi.open();
 
   let output = gui.addFolder('Output');
-  output.add(guiState.output, 'showVideo');
   output.add(guiState.output, 'showSkeleton');
   output.add(guiState.output, 'showPoints');
-  output.add(guiState.output, 'showBoundingBox');
   output.open();
 
 
@@ -468,34 +382,29 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
 
     ctx.clearRect(0, 0, videoWidth, videoHeight);
 
-    if (guiState.output.showVideo) {
-      ctx.save();
-      ctx.scale(-1, 1);
-      ctx.translate(-videoWidth, 0);
-      ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
-      ctx.restore();
-    }
+    // Show video
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.translate(-videoWidth, 0);
+    ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+    ctx.restore();
 
     // For each pose (i.e. person) detected in an image, loop through the poses
     // and draw the resulting skeleton and keypoints if over certain confidence
     // scores
+    let handPoints = new Array<posenet_types.Vector2D>();
     poses.forEach(({ score, keypoints }) => {
       if (score >= minPoseConfidence) {
-        // if (guiState.output.showPoints) {
-        //   drawKeypoints(keypoints, minPartConfidence, ctx);
-        // }
-        // if (guiState.output.showSkeleton) {
-        //   drawSkeleton(keypoints, minPartConfidence, ctx);
-        // }
-        if (guiState.output.showBoundingBox) {
-          drawBoundingBox(keypoints, ctx);
+        if (guiState.output.showPoints) {
+          drawKeypoints(keypoints, minPartConfidence, ctx);
         }
-        // let circle =new utils.Circle(120,120,100);
-
-        // utils.addCircle(ctx,circle);
+        if (guiState.output.showSkeleton) {
+          drawSkeleton(keypoints, minPartConfidence, ctx);
+        }
+        handPoints = [keypoints[9].position, keypoints[10].position]
       }
     });
-    gameState.update(null, ctx);
+    gameState.update(handPoints, ctx);
     // End monitoring code for frames per second
     stats.end();
     requestAnimationFrame(poseDetectionFrame);
