@@ -52,7 +52,7 @@ export class Score {
                 var data = HardData.data
                 break
             default:
-                console.log("please correct level")
+                console.log("please input correct level")
                 return null
         }
 
