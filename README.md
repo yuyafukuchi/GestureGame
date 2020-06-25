@@ -69,7 +69,7 @@ cd ../
 yarn build && yarn yalc push
 ```
 
-##UI DESIGN
+##  UI DESIGN
 
 ### General
 - Home.html is the entry page, please use it to start for testing all the functions.
