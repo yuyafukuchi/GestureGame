@@ -404,7 +404,9 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
         points = keypoints.map(function (kp) { return kp.position });
       }
     });
-    gameState.update(points, ctx);
+    if (points) {
+      gameState.update(points, ctx);
+    }
     // End monitoring code for frames per second
     stats.end();
 

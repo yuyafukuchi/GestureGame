@@ -16,9 +16,14 @@ export class GameState {
     public update(points: Vector2D[], ctx: CanvasRenderingContext2D) {
         const gameTime = performance.now() - this.startTime;
 
-        const leftHand = this.getHandPosition(points[7], points[9]);
-        const rightHand = this.getHandPosition(points[8], points[10]);
-        const hands = [leftHand, rightHand]
+        const hands: Vector2D[] = []
+        if (points[7] && points[9]) {
+            hands.push(this.getHandPosition(points[7], points[9]));
+        }
+
+        if (points[8] && points[10]) {
+            hands.push(this.getHandPosition(points[8], points[10]));
+        }
         this.targets.forEach(target => {
             target.render(ctx, hands, gameTime);
         });
