@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Gaming</title>
+
+	<style type="text/css">
+		a:link, a:visited {
+			text-decoration: none;
+			color:#FFFFFF;
+		}
+
+		.global{
+			margin: 0px; 
+			padding: 0px;
+			background-color: #FFFFFF;
+		}
+		#upper_bar{
+			height: 10%;
+			background-color: red;
+		}
+
+		.btn{
+			height: 30px;
+			width: 150px;
+			box-shadow: darkgrey 2px 2px 5px;
+			background-color:#8BE067;
+			text-align: center;
+			color: #FFFFFF;
+			font-family:  Consolas, monaco, monospace;
+			font-size: 20px;
+			font-weight: bold;
+
+		}
+		#score_box{
+			float: left;
+			border-radius: 0 5px 5px 0;
+		}
+
+		#pause_btn{
+			height: 30px;
+			width: 50px;
+			float:left;
+			background-color: red;
+		}
+
+		#remaining_time{
+			float:right;
+			border-radius: 5px 0 0 5px; 
+		}
+		#game_box{
+			margin: auto;
+/*			width: 600px;
+			height: 350px;*/
+			margin-top: 1%;
+			padding-bottom: 40%;
+			width: 80%;
+			height: 0;
+			border: 3px solid blue;
+			text-align: center;
+			font-size: 50px;
+
+		}
+
+	
+	</style>
+
+	<script type="text/javascript">
+		var countdown=5;
+		var lvv=2;    //set origin level
+
+		function set_diffi()  {  
+            var url=location.href;  
+            var tmp1=url.split("?")[1];  
+            var tmp2=tmp1.split("&")[0];  
+            var tmp3=tmp2.split("=")[1];  
+            var param1=tmp3;
+			var lv=decodeURI(param1)
+			if (lv==1) {lvv=1; countdown=8;} //parse then record lv and correspongding time
+			if (lv==2) {lvv=2; countdown=5;}
+			if (lv==3) {lvv=3; countdown=3;}
+			settime();
+
+		}
+
+
+		function settime() { 
+			if (countdown>=0) {
+				document.getElementById('remaining_time').innerHTML="Time: "+countdown+"s";
+				countdown--;  
+				setTimeout(function() {settime()} ,1000);
+			}
+			else
+				jump();
+				// window.location.href = 'Result.html';		  
+		}
+
+        function jump()  
+        {  
+            var parm1=document.getElementById("score_box").innerHTML
+            var myurl="Result.html"+"?"+"parm1="+parm1+"&parm2="+lvv;  //pass scores and current lv
+            window.location.assign(encodeURI(myurl));  
+        }  
+
+		function numPlus() {
+                var p = document.getElementById('score_box');
+                p.innerHTML++;
+            }
+		
+	</script>
+
+
+</head>
+<body class="global" onload="set_diffi()"><!--  -->
+	<div id="upper_bar">
+		<div class="btn" id="score_box">0</div>
+		<div id="pause_btn"> pause</div>
+		<div class="btn" id="remaining_time"> <!-- Time: 60s --></div>
+
+	</div>
+	<input type="button" class="btn" id="btn" value="click here" onclick="numPlus()">
+	<div id="game_box">screen</div>
+</body>
+</html>
