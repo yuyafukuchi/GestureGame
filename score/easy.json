@@ -1,0 +1,41 @@
+{ 
+    "data": 
+    [
+        {
+            "start": 3400,
+            "end": 3500,
+            "circleNumber": 1,
+            "point": 100
+        },
+        {
+            "start": 3500,
+            "end": 3600,
+            "circleNumber": 2,
+            "point": 100
+        },
+        {
+            "start": 3600,
+            "end": 3700,
+            "circleNumber": 3,
+            "point": 100
+        },
+        {
+            "start": 3400,
+            "end": 3500,
+            "circleNumber": 1,
+            "point": 100
+        },
+        {
+            "start": 3400,
+            "end": 3500,
+            "circleNumber": 1,
+            "point": 100
+        },
+        {
+            "start": 3400,
+            "end": 3500,
+            "circleNumber": 1,
+            "point": 100
+        }
+    ] 
+}
