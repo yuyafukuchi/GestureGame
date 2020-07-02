@@ -1,6 +1,7 @@
 import { Vector2D } from '@tensorflow-models/posenet/dist/types';
 import { Circle } from './util'
-import { Target, Duration } from "./Target";
+import { Target } from "./Target";
+import { Event } from './Score'
 
 export class GameState {
     private readonly targets: Array<Target>;
@@ -29,7 +30,7 @@ export class GameState {
         });
     }
 
-    public addTarget(circle: Circle, durations: Array<Duration>) {
+    public addTarget(circle: Circle, durations: Array<Event>) {
         this.targets.push(new Target(circle, durations))
     }
 

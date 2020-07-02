@@ -22,8 +22,8 @@ import { PredictionGuiState } from './PredictionGuiState'
 import Stats = require('stats.js')
 
 import { drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI } from './demo_util';
-import { Duration } from './Target';
 import { GameState } from './GameState'
+import { Score } from './Score'
 
 const videoWidth = 600;
 const videoHeight = 500;
@@ -447,19 +447,14 @@ export async function bindPage() {
   setupFPS();
   let gameState = new GameState()
 
+  const events = new Score('easy').events;
   for (let i = 1; i < 10; i++) {
     const centerX = 300;
     const centerY = 275;
     const alignR = 240;
-    const durations = [
-      new Duration(0 + 500 * i, 500),
-      new Duration(5000 + 500 * i, 500),
-      new Duration(10000 + 500 * i, 500),
-      new Duration(15000 + 500 * i, 500),
-      new Duration(20000 + 500 * i, 500),
-      new Duration(25000 + 500 * i, 500),
-    ];
-    gameState.addTarget(new utils.Circle(centerX - alignR * Math.sin(Math.PI / 5 * i), centerY + alignR * Math.cos(Math.PI / 5 * i), 30), durations);
+    const filtered = events.filter(ev => ev.circleNumber == i);
+    gameState.addTarget(new utils.Circle(centerX - alignR * Math.sin(Math.PI / 5 * i),
+      centerY + alignR * Math.cos(Math.PI / 5 * i), 30), filtered);
   }
   gameState.start();
   detectPoseInRealTime(video, net, gameState);

@@ -1,12 +1,13 @@
 import { Vector2D } from '@tensorflow-models/posenet/dist/types';
 import { Circle } from './util'
+import { Event } from './Score'
 
 
 export class Target {
     public circle: Circle
-    private durations: Array<Duration>
+    private durations: Array<Event>
 
-    constructor(circle: Circle, durations: Array<Duration>) {
+    constructor(circle: Circle, durations: Array<Event>) {
         this.circle = circle
         this.durations = durations;
     }
@@ -16,11 +17,12 @@ export class Target {
         ctx.arc(this.circle.x, this.circle.y, this.circle.r, 0, 2 * Math.PI);
         ctx.fillStyle = 'transparent';
         ctx.strokeStyle = 'white';
-        if (this.isInDurations(timestamp)) {
+        const duration = this.isInDurations(timestamp);
+        if (duration) {
             ctx.strokeStyle = 'red';
         }
 
-        if(this.circle.IsAnyInCircle(points)){
+        if (this.circle.IsAnyInCircle(points)) {
             ctx.fillStyle = 'red';
         }
 
@@ -33,23 +35,10 @@ export class Target {
 
         for (const duration of this.durations) {
             if (duration.isInDuration(timestamp)) {
+
                 return true;
             }
         }
         return false;
-    }
-}
-
-export class Duration {
-    public start: number
-    public duration: number
-
-    constructor(start: number, duration: number) {
-        this.start = start;
-        this.duration = duration;
-    }
-
-    public isInDuration(timestamp: number) {
-        return this.start <= timestamp && timestamp <= this.start + this.duration;
     }
 }
