@@ -3,10 +3,8 @@ import * as posenet from '@tensorflow-models/posenet';
 import { isMobile } from './demo_util';
 
 export class PredictionGuiState {
-    algorithm: string;
     input: InputConfig;
     singlePoseDetection: SinglePoseDetectionConfig;
-    multiPoseDetection: MultiPoseDetectionConfig;
     output: OutputConfig;
     net: posenet.PoseNet;
     camera: string;
@@ -27,8 +25,6 @@ export class PredictionGuiState {
         ret.input = InputConfig.Default;
         ret.output = OutputConfig.Default;
         ret.singlePoseDetection = SinglePoseDetectionConfig.Default;
-        ret.multiPoseDetection = MultiPoseDetectionConfig.Default;
-        ret.algorithm = 'multi-pose';
         return ret;
     }
 }
@@ -75,21 +71,6 @@ class SinglePoseDetectionConfig {
         let ret = new SinglePoseDetectionConfig();
         ret.minPoseConfidence = 0.1;
         ret.minPartConfidence = 0.5;
-        return ret;
-    }
-}
-
-class MultiPoseDetectionConfig {
-    maxPoseDetections: number;
-    minPoseConfidence: number;
-    minPartConfidence: number;
-    nmsRadius: number;
-    public static get Default(): MultiPoseDetectionConfig {
-        let ret = new MultiPoseDetectionConfig();
-        ret.maxPoseDetections = 5;
-        ret.minPoseConfidence = 0.15;
-        ret.minPartConfidence = 0.1;
-        ret.nmsRadius = 30.0;
         return ret;
     }
 }

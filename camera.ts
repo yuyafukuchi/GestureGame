@@ -92,12 +92,6 @@ function setupGui(cameras: any[], net: posenet.PoseNet) {
 
   const gui = new dat.GUI({ width: 300 });
 
-  // The single-pose algorithm is faster and simpler but requires only one
-  // person to be in the frame or results will be innaccurate. Multi-pose works
-  // for more than 1 person
-  const algorithmController =
-    gui.add(guiState, 'algorithm', ['single-pose', 'multi-pose']);
-
   // The input parameters have the most effect on accuracy and speed of the
   // network
   let input = gui.addFolder('Input');
@@ -206,36 +200,12 @@ function setupGui(cameras: any[], net: posenet.PoseNet) {
   let single = gui.addFolder('Single Pose Detection');
   single.add(guiState.singlePoseDetection, 'minPoseConfidence', 0.0, 1.0);
   single.add(guiState.singlePoseDetection, 'minPartConfidence', 0.0, 1.0);
-
-  let multi = gui.addFolder('Multi Pose Detection');
-  multi.add(guiState.multiPoseDetection, 'maxPoseDetections')
-    .min(1)
-    .max(20)
-    .step(1);
-  multi.add(guiState.multiPoseDetection, 'minPoseConfidence', 0.0, 1.0);
-  multi.add(guiState.multiPoseDetection, 'minPartConfidence', 0.0, 1.0);
-  // nms Radius: controls the minimum distance between poses that are returned
-  // defaults to 20, which is probably fine for most use cases
-  multi.add(guiState.multiPoseDetection, 'nmsRadius').min(0.0).max(40.0);
-  multi.open();
+  single.open();
 
   architectureController.onChange(function (architecture) {
     // if architecture is ResNet50, then show ResNet50 options
     updateGui();
     guiState.changeToArchitecture = architecture;
-  });
-
-  algorithmController.onChange(function (value) {
-    switch (guiState.algorithm) {
-      case 'single-pose':
-        multi.close();
-        single.open();
-        break;
-      case 'multi-pose':
-        single.close();
-        multi.open();
-        break;
-    }
   });
 }
 
@@ -349,30 +319,13 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
     let poses: posenet.Pose[] = [];
     let minPoseConfidence: number;
     let minPartConfidence: number;
-    switch (guiState.algorithm) {
-      case 'single-pose':
-        const pose = await guiState.net.estimatePoses(video, {
-          flipHorizontal: flipPoseHorizontal,
-          decodingMethod: 'single-person'
-        });
-        poses = poses.concat(pose);
-        minPoseConfidence = +guiState.singlePoseDetection.minPoseConfidence;
-        minPartConfidence = +guiState.singlePoseDetection.minPartConfidence;
-        break;
-      case 'multi-pose':
-        let all_poses = await guiState.net.estimatePoses(video, {
-          flipHorizontal: flipPoseHorizontal,
-          decodingMethod: 'multi-person',
-          maxDetections: guiState.multiPoseDetection.maxPoseDetections,
-          scoreThreshold: guiState.multiPoseDetection.minPartConfidence,
-          nmsRadius: guiState.multiPoseDetection.nmsRadius
-        });
-
-        poses = poses.concat(all_poses);
-        minPoseConfidence = +guiState.multiPoseDetection.minPoseConfidence;
-        minPartConfidence = +guiState.multiPoseDetection.minPartConfidence;
-        break;
-    }
+    const pose = await guiState.net.estimatePoses(video, {
+      flipHorizontal: flipPoseHorizontal,
+      decodingMethod: 'single-person'
+    });
+    poses = poses.concat(pose);
+    minPoseConfidence = +guiState.singlePoseDetection.minPoseConfidence;
+    minPartConfidence = +guiState.singlePoseDetection.minPartConfidence;
 
     ctx.clearRect(0, 0, videoWidth, videoHeight);
 
