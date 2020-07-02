@@ -219,12 +219,6 @@ function setupGui(cameras: any[], net: posenet.PoseNet) {
   multi.add(guiState.multiPoseDetection, 'nmsRadius').min(0.0).max(40.0);
   multi.open();
 
-  let output = gui.addFolder('Output');
-  output.add(guiState.output, 'showSkeleton');
-  output.add(guiState.output, 'showPoints');
-  output.open();
-
-
   architectureController.onChange(function (architecture) {
     // if architecture is ResNet50, then show ResNet50 options
     updateGui();
