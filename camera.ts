@@ -465,6 +465,16 @@ export async function bindPage() {
   detectPoseInRealTime(video, net, gameState);
 }
 
+async function initShow ( ) {
+  utils.setRemainingTime(10)
+  utils.showScore(111)
+}
+
 navigator.getUserMedia = navigator.getUserMedia;
+
+initShow();
+
 // kick off the demo
 bindPage();
+
+

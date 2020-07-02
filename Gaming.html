@@ -67,7 +67,7 @@
 	
 	</style>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		var countdown=5;
 		var lvv=2;    //set origin level
 
@@ -93,7 +93,8 @@
 				setTimeout(function() {settime()} ,1000);
 			}
 			else
-				jump();
+				console.log("test")
+				// jump();
 				// window.location.href = 'Result.html';		  
 		}
 
@@ -109,7 +110,7 @@
                 p.innerHTML++;
             }
 		
-	</script>
+	</script> -->
 
 
 </head>
@@ -121,6 +122,23 @@
 
 	</div>
 	<input type="button" class="btn" id="btn" value="click here" onclick="numPlus()">
-	<div id="game_box">screen</div>
+	<div id="game_box">
+
+	</div>
+	<div>
+		<div id="loading" style='display:flex'>
+			<div class="spinner-text">
+				Loading PoseNet model...
+			</div>
+			<div class="sk-spinner sk-spinner-pulse"></div>
+		</div>
+		<div id='main' style='display:none'>
+			<video id="video" playsinline style="display: none;">
+			</video>
+			<canvas id="output" />
+		</div>
+	</div>
+    
+    <script src="camera.ts"></script>
 </body>
 </html>
