@@ -6,9 +6,11 @@ import { Event } from './Score'
 export class GameState {
     private readonly targets: Array<Target>;
     private startTime: number;
+    public score: number;
 
     constructor() {
         this.targets = new Array<Target>();
+        this.score = 0;
     }
 
     public start(): void {
@@ -26,8 +28,9 @@ export class GameState {
             hands.push(this.getHandPosition(points[8], points[10]));
         }
         this.targets.forEach(target => {
-            target.render(ctx, hands, gameTime);
+            this.score += target.update(ctx, hands, gameTime);
         });
+        console.log(this.score);
     }
 
     public addTarget(circle: Circle, durations: Array<Event>) {
