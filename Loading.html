@@ -36,6 +36,7 @@
 
 	<script type="text/javascript">
 
+		// parse difficulty level then jump to the game page with this level
 		function jump()  
         {  
             var url=location.href;  
@@ -51,9 +52,7 @@
 			t=1000;
 			var i=setInterval(t++, t);
 
-			// //auto jump to 
-			// var j=setTimeout(function() { clearInterval( i ); 
-			// window.location.href = 'gaming.html';}, 2000); 
+			//jump after countdown
 			var j=setTimeout(function() { clearInterval( i ); 
 			jump();}, 2000); 
 

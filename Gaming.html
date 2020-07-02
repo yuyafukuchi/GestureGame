@@ -68,8 +68,8 @@
 	</style>
 
 	<script type="text/javascript">
-		var countdown=5;
-		var lvv=2;    //set origin level
+		//var countdown=5;
+		// var lvv=0;    //set origin level 
 
 		function set_diffi()  {  
             var url=location.href;  
@@ -78,14 +78,14 @@
             var tmp3=tmp2.split("=")[1];  
             var param1=tmp3;
 			var lv=decodeURI(param1)
-			if (lv==1) {lvv=1; countdown=8;} //parse then record lv and correspongding time
+			if (lv==1) {lvv=1; countdown=8;} //parse then record current lv and correspongding game time
 			if (lv==2) {lvv=2; countdown=5;}
 			if (lv==3) {lvv=3; countdown=3;}
 			settime();
 
 		}
 
-
+		//countdown for "countdown" second
 		function settime() { 
 			if (countdown>=0) {
 				document.getElementById('remaining_time').innerHTML="Time: "+countdown+"s";
@@ -97,13 +97,16 @@
 				// window.location.href = 'Result.html';		  
 		}
 
+		//jump to the result page with score and current difficulty level
         function jump()  
-        {  
+        {	//get secores
             var parm1=document.getElementById("score_box").innerHTML
-            var myurl="Result.html"+"?"+"parm1="+parm1+"&parm2="+lvv;  //pass scores and current lv
+			//pass scores(1st para) and current level(lvv)(2nd para) 
+            var myurl="Result.html"+"?"+"parm1="+parm1+"&parm2="+lvv;  
             window.location.assign(encodeURI(myurl));  
         }  
 
+		// score up with clicking
 		function numPlus() {
                 var p = document.getElementById('score_box');
                 p.innerHTML++;

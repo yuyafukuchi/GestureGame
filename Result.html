@@ -66,24 +66,28 @@
 		#value_box{
 			/*background-color: red;*/
 			height: 50px;
-			padding-top: 25px;
+			padding-top: 20px;
 
 		}
 		#value{
 			margin: 0px;
 			text-align: center;
 			font-family:Gill Sans, sans-serif;
-			font-size: 30px;
+			font-size: 40px;
 			font-weight: 700;
 		}
 
 		#countdown_circle{
     		/*display: inline-block;*/
     		margin: auto;
-    		border-radius: 50px; /* 圆形边缘弧度 */
-    		width: 100px; /* 宽度 */
-    		height: 100px; /* 高度 */
+    		margin-top: 5px;
+    		border-radius: 50px; 
+    		width: 100px; 
+    		height: 100px; 
     		background-color: #8BE067;
+		}
+		#countdown_circle:active{
+			background-color: #9BFF8D;
 		}
 		#cdnum{
 			padding-top: 30px;
@@ -99,20 +103,26 @@
 
 		
 
-		function countDown(){
-			t=1000;
-			var i=setInterval("document.getElementById('cdnum').innerHTML--;", t);
-			// setTimeout(function() { clearInterval( i );} , 3000);
-			showresult();
-			// //auto jump to 
-			var j=setTimeout(function() { clearInterval( i ); 
-				jump();}, 3000); 
+		// countdown for 3s
+		function countDown(){ 
 
+				t=1000;
+				var i=setInterval("document.getElementById('cdnum').innerHTML--;", t);
+				// setTimeout(function() { clearInterval( i );} , 3000); //without jump
+				showresult();
+				// //auto jump to 
+				var j=setTimeout(function() { clearInterval( i ); 
+				jump();}, 3000);
+				// tap to stop the countdown
+				document.getElementById("countdown_circle").onclick=
+					function(){clearInterval( i );clearInterval( j );}		
 		}
-        function showresult()  
 
+
+		//parse the result passed from Game page then show it
+        function showresult()  
         {  
-            var url=location.href;  
+            var url=location.href;  //parse the 1st para(for score)
             var tmp1=url.split("?")[1];  
             var tmp2=tmp1.split("&")[0];  
             var tmp3=tmp2.split("=")[1];  
@@ -120,9 +130,10 @@
             document.getElementById('value').innerHTML=decodeURI(param1);
 		}
 
+		// jump to the loading page with passing the same difficulty level info, restart the game
 		function jump()  
         {   var url=location.href;  
-            var tmp1=url.split("?")[1];  
+            var tmp1=url.split("?")[1];  // parse the 2nd para(for difficculty level)
             var tmp2=tmp1.split("&")[1];  
             var tmp3=tmp2.split("=")[1];  
             var param2=tmp3;  
@@ -146,11 +157,27 @@
 			<p id="title"> Scores </p>
 		</div>
 		<div id="value_box">
-			<div id="value"> 9999 </div>
+			<div id="value"> 0 </div>
 		</div>
 		<div id="countdown_circle">
 			<div id="cdnum"> 3 </div>
+			<div style="text-align: center; color: #FFFFFF">Tap to stop</div>
 		</div>
+
 	</div>
+
+<!-- facebook and twitter sharing buttons -->
+<div id="share" style="width: 150px;">
+	<!-- FB -->
+	<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large" data-lang="en" id="fb_button">
+		<a id="fb_button" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Facebook</a>
+	</div>
+	<div id="fb-root"></div>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0" nonce="bE6145wp"></script>
+
+	<!-- TW -->
+	<a href="https://twitter.com/intent/tweet?button_hashtag=TTP&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-size="large" data-text="I got a High Score in #TTP#, let's play it!" id="tw_button" data-lang="en" data-show-count="false">Tweet #post</a>
+	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
 </body>	
 </html>
