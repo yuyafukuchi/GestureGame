@@ -466,7 +466,7 @@ export async function bindPage() {
 }
 
 async function initShow ( ) {
-  utils.setRemainingTime(10)
+  utils.setRemainingTime(13)
   utils.showScore(111)
 }
 

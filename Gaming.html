@@ -67,52 +67,6 @@
 	
 	</style>
 
-	<!-- <script type="text/javascript">
-		var countdown=5;
-		var lvv=2;    //set origin level
-
-		function set_diffi()  {  
-            var url=location.href;  
-            var tmp1=url.split("?")[1];  
-            var tmp2=tmp1.split("&")[0];  
-            var tmp3=tmp2.split("=")[1];  
-            var param1=tmp3;
-			var lv=decodeURI(param1)
-			if (lv==1) {lvv=1; countdown=8;} //parse then record lv and correspongding time
-			if (lv==2) {lvv=2; countdown=5;}
-			if (lv==3) {lvv=3; countdown=3;}
-			settime();
-
-		}
-
-
-		function settime() { 
-			if (countdown>=0) {
-				document.getElementById('remaining_time').innerHTML="Time: "+countdown+"s";
-				countdown--;  
-				setTimeout(function() {settime()} ,1000);
-			}
-			else
-				console.log("test")
-				// jump();
-				// window.location.href = 'Result.html';		  
-		}
-
-        function jump()  
-        {  
-            var parm1=document.getElementById("score_box").innerHTML
-            var myurl="Result.html"+"?"+"parm1="+parm1+"&parm2="+lvv;  //pass scores and current lv
-            window.location.assign(encodeURI(myurl));  
-        }  
-
-		function numPlus() {
-                var p = document.getElementById('score_box');
-                p.innerHTML++;
-            }
-		
-	</script> -->
-
-
 </head>
 <body class="global" onload="set_diffi()"><!--  -->
 	<div id="upper_bar">
@@ -121,23 +75,7 @@
 		<div class="btn" id="remaining_time"> <!-- Time: 60s --></div>
 
 	</div>
-	<input type="button" class="btn" id="btn" value="click here" onclick="numPlus()">
-	<div id="game_box">
-
-	</div>
-	<div>
-		<div id="loading" style='display:flex'>
-			<div class="spinner-text">
-				Loading PoseNet model...
-			</div>
-			<div class="sk-spinner sk-spinner-pulse"></div>
-		</div>
-		<div id='main' style='display:none'>
-			<video id="video" playsinline style="display: none;">
-			</video>
-			<canvas id="output" />
-		</div>
-	</div>
+	<div id="game_box"></div>
     
     <script src="camera.ts"></script>
 </body>

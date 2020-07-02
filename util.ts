@@ -32,7 +32,7 @@ export function setRemainingTime(countdown: number) {
     }
     else
         // FIXME: Scoreの値からpoint, levelを引数として与える
-        jumpToResultPage(0, "1");
+        jumpToResultPage(111, "1");
 }
 
 function jumpToResultPage(point: number, level: String) {  
