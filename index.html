@@ -1,12 +1,113 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>PoseNet Demos</title>
-  </head>
-  <body>
-    <h1>PoseNet Demos</h1>
-    <ul>
-      <li><a href='camera.html'>Pose Estimation - Camera feed demo</a></li>
-    </ul>
-  </body>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Home</title>
+	<style type="text/css">
+		.global{
+			margin: 0px;
+/*			width: 812px;
+			height: 375px; */
+			padding-top: 50px;
+			padding-bottom: 0px;
+
+			background-image: url(./image/bgimage2.jpg);/*背景图片*/
+			/*background-repeat: no-repeat;*//*重复方式*/
+			background-size: contain; /*图片填充*/
+		}
+		a:link, a:visited {
+			text-decoration: none;
+			color:#FFFFFF;
+		}
+		#game_icon{
+			margin: auto;
+			/*background-color: blue;*/
+			height: 90px;
+			width: 200px;
+			margin-bottom: 30px;
+			background-image: url(./image/TitleImage.png);
+			background-size: contain;
+			background-repeat: no-repeat;
+		}
+		#diffi_part{
+			/*background-color: red;*/
+			margin: auto;
+			height: 200px;
+			width: 116px;
+
+			/*padding: 0px 340px;*/
+		}
+		.diffi_button{			
+			height: 33px;
+			width: 116px;
+			margin: 8px;
+			padding-top: 7px;
+			box-shadow: darkgrey 0px 0px 3px 3px;
+			border-radius:5px;
+			background-color: blue;
+			color: #FFFFFF;
+			text-align: center;
+			font-weight: bold;
+		}
+		.diffi_button:active{
+			background-color: #20FFFF;
+		}
+
+		#easy{
+			background-color: #4BF46D;
+		}
+		#normal{
+			background-color: #FEB65C;
+		}
+		#hard{
+			background-color: #FC4C57;
+		}
+	</style>
+	<script type="text/javascript">
+
+		function jump(diff)  
+        {  
+			var num=diff;
+            var myurl="Loading.html"+"?"+"parm1="+num;  
+            window.location.assign(encodeURI(myurl));  
+        } 
+
+		function difficulty(diff){
+			// var start=new Date().getTime();
+			// while(new Date().getTime()<start+1000);//delay for 1s
+			var num =diff; 
+			if (num==1) {alert("Lv: Easy");jump(1);}
+			if (num==2) {alert("Lv: Normal");jump(2);}
+			if (num==3) {alert("Lv: Hard");jump(3);}
+			
+		}
+
+	</script>
+</head>
+<body class="global">
+		<div id="game_icon"></div>
+	<div id="diffi_part">
+		<div class="diffi_button" id="easy" onclick="difficulty(1)"> <!-- button easy -->
+			Easy
+			<a href="#"></a> <!-- link if needed -->
+		</div>
+
+		<div class="diffi_button" id="normal" onclick="difficulty(2)"> <!-- button normal -->
+			Normal
+			<a href="#"></a>
+		</div>
+	
+		<div class="diffi_button" id="hard" onclick="difficulty(3)"> <!-- button hard -->
+			Hard
+			<a href="#"></a>
+		</div>
+
+		<div class="diffi_button">
+			<a href="HowToPlay.html">How To Play</a>
+		</div>
+
+	</div>
+</body>
 </html>
