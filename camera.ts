@@ -110,15 +110,14 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
     stats.begin();
 
     let poses: posenet.Pose[] = [];
-    let minPoseConfidence: number;
-    let minPartConfidence: number;
     const pose = await guiState.net.estimatePoses(video, {
       flipHorizontal: flipPoseHorizontal,
       decodingMethod: 'single-person'
     });
     poses = poses.concat(pose);
-    minPoseConfidence = +guiState.singlePoseDetection.minPoseConfidence;
-    minPartConfidence = +guiState.singlePoseDetection.minPartConfidence;
+    console.log(poses.length);
+    let minPoseConfidence: number = guiState.singlePoseDetection.minPoseConfidence;
+    let minPartConfidence: number = guiState.singlePoseDetection.minPartConfidence;
 
     ctx.clearRect(0, 0, videoWidth, videoHeight);
 
@@ -162,13 +161,7 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
  */
 export async function bindPage() {
   toggleLoadingUI(true);
-  const net = await posenet.load({
-    architecture: guiState.input.architecture,
-    outputStride: guiState.input.outputStride,
-    inputResolution: guiState.input.inputResolution,
-    multiplier: guiState.input.multiplier,
-    quantBytes: guiState.input.quantBytes
-  });
+  const net = await posenet.load(guiState.input);
   toggleLoadingUI(false);
 
   let video;
