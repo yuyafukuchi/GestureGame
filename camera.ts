@@ -193,14 +193,6 @@ function setupGui(cameras: any[], net: posenet.PoseNet) {
 
   updateGui();
   input.open();
-  // Pose confidence: the overall confidence in the estimation of a person's
-  // pose (i.e. a person detected in a frame)
-  // Min part confidence: the confidence that a particular estimated keypoint
-  // position is accurate (i.e. the elbow's position)
-  let single = gui.addFolder('Single Pose Detection');
-  single.add(guiState.singlePoseDetection, 'minPoseConfidence', 0.0, 1.0);
-  single.add(guiState.singlePoseDetection, 'minPartConfidence', 0.0, 1.0);
-  single.open();
 
   architectureController.onChange(function (architecture) {
     // if architecture is ResNet50, then show ResNet50 options

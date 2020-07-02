@@ -33,6 +33,8 @@ const defaultMobileNetStride = 16;
 const defaultMobileNetInputResolution = 500;
 const defaultQuantBytes = 2;
 const defaultMobileNetMultiplier = isMobile() ? 0.50 : 0.75;
+const minPoseConfidence = 0.1;
+const minPartConfidence = 0.5;
 
 class InputConfig {
     architecture: posenet_types.PoseNetArchitecture;
@@ -69,8 +71,8 @@ class SinglePoseDetectionConfig {
     minPartConfidence: number;
     public static get Default(): SinglePoseDetectionConfig {
         let ret = new SinglePoseDetectionConfig();
-        ret.minPoseConfidence = 0.1;
-        ret.minPartConfidence = 0.5;
+        ret.minPoseConfidence = minPoseConfidence;
+        ret.minPartConfidence = minPartConfidence;
         return ret;
     }
 }
