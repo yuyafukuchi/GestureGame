@@ -8,17 +8,6 @@ export class PredictionGuiState {
     output: OutputConfig;
     net: posenet.PoseNet;
     camera: string;
-    multiplier: posenet.MobileNetMultiplier;
-    changeToMultiplier: posenet.MobileNetMultiplier;
-    inputResolution: posenet.InputResolution;
-    changeToInputResolution: posenet.InputResolution;
-    outputStride: posenet.PoseNetOutputStride;
-    changeToOutputStride: posenet.PoseNetOutputStride;
-    architecture: posenet_types.PoseNetArchitecture;
-    changeToArchitecture: posenet_types.PoseNetArchitecture;
-    quantBytes: posenet_types.PoseNetQuantBytes;
-    changeToQuantBytes: posenet_types.PoseNetQuantBytes;
-    tryResNetButton: any;
 
     public static get Default(): PredictionGuiState {
         let ret = new PredictionGuiState();
@@ -29,10 +18,23 @@ export class PredictionGuiState {
     }
 }
 
-const defaultMobileNetStride = 16;
+// NN type to use for prediction
+const defaultArchitecture: posenet_types.PoseNetArchitecture = "MobileNetV1";
+//const defaultArchitecture: posenet_types.PoseNetArchitecture = 'ResNet50';
+
+///////////// MobileNet Configs //////////////////////
+// Select from 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800
 const defaultMobileNetInputResolution = 500;
-const defaultQuantBytes = 2;
-const defaultMobileNetMultiplier = isMobile() ? 0.50 : 0.75;
+const defaultMobileNetMultiplier = isMobile() ? 0.50 : 0.75; // 0.5, 0.75 or 1.0
+const defaultMobileNetStride = 16; // 8 or 16
+
+///////////// ResNet Configs //////////////////////
+// Select from 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800
+const defaultResNetInputResolution = 250;
+const defaultResNetMultiplier = 1.0; // Always 1.0
+const defaultResNetStride = 32; // 32 or 16
+
+const defaultQuantBytes = 2; // 1, 2 or 4
 const minPoseConfidence = 0.1;
 const minPartConfidence = 0.5;
 
@@ -45,10 +47,16 @@ class InputConfig {
 
     public static get Default(): InputConfig {
         let ret = new InputConfig();
-        ret.architecture = 'MobileNetV1';
-        ret.outputStride = defaultMobileNetStride;
-        ret.inputResolution = defaultMobileNetInputResolution;
-        ret.multiplier = defaultMobileNetMultiplier;
+        ret.architecture = defaultArchitecture;
+        if (ret.architecture == 'MobileNetV1') {
+            ret.outputStride = defaultMobileNetStride;
+            ret.inputResolution = defaultMobileNetInputResolution;
+            ret.multiplier = defaultMobileNetMultiplier;
+        } else {
+            ret.outputStride = defaultResNetStride;
+            ret.inputResolution = defaultResNetInputResolution;
+            ret.multiplier = defaultResNetMultiplier;
+        }
         ret.quantBytes = defaultQuantBytes;
         return ret;
     }
