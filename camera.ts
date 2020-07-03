@@ -466,5 +466,8 @@ export async function bindPage() {
 }
 
 navigator.getUserMedia = navigator.getUserMedia;
+
 // kick off the demo
 bindPage();
+
+
