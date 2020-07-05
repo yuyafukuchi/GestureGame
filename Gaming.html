@@ -17,7 +17,7 @@
 			padding: 0px;
 			background-color: #FFFFFF;
 		}
-		#upper_bar{
+		#pause_button{
 			height: 10%;
 			background-color: red;
 		}
@@ -64,15 +64,50 @@
 
 		}
 
-	
+		.figure {/*親div*/
+			position: relative;/*相対配置*/
+			width: 825px;
+		}
+
+		.figure #mode {
+			position: absolute;
+			top: 45px;
+			left: 650px;
+			font-size: 30px;
+		}
+
+		.figure #score {
+			position: absolute;
+			top: -10px;
+			left: 650px;
+			font-size: 30px;
+		}
+
+		.figure #remaining_time {
+			position: absolute;
+			top: -40px;
+			left: 250px;
+			font-size: 60px;
+		}
+
+		.figure img {
+			width: 100%;
+		}
+
 	</style>
 
 </head>
 <body class="global" onload="set_diffi()"><!--  -->
 	<div id="upper_bar">
-		<div class="btn" id="score_box">0</div>
-		<div id="pause_btn"> pause</div>
-		<div class="btn" id="remaining_time"> <!-- Time: 60s --></div>
+
+		<div class="figure">
+			<img src="image/scoreboard.png" alt="scoreboard">
+			<p id="score">0</p>
+			<p id="mode">1</p>
+			<p id="remaining_time">0</p>
+		</div>
+
+		<!-- <div id="pause_btn"> pause</div> -->
 
 	</div>
 	<div id="game_box"></div>
