@@ -6,6 +6,7 @@ import { Event } from './Score'
 export class Target {
     public circle: Circle
     private durations: Array<Event>
+    private isTouched: Boolean = false
 
     constructor(circle: Circle, durations: Array<Event>) {
         this.circle = circle
@@ -20,13 +21,18 @@ export class Target {
         let incrementScore = 0;
         const duration = this.getEvent(timestamp);
         if (duration != null) {
-            ctx.strokeStyle = 'red';
+            if (this.isTouched) {
+                ctx.strokeStyle = 'white';
+            } else {
+                ctx.strokeStyle = 'red';
+            }
         }
 
         if (this.circle.IsAnyInCircle(points)) {
             ctx.fillStyle = 'red';
             if (duration != null) {
                 incrementScore = duration.onTouched();
+                this.isTouched = true;
             }
         }
 
