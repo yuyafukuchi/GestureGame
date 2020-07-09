@@ -1,55 +1,49 @@
 import { Vector2D } from '@tensorflow-models/posenet/dist/types';
 import { Circle } from './util'
+import { Event } from './Score'
 
 
 export class Target {
     public circle: Circle
-    private durations: Array<Duration>
+    private durations: Array<Event>
 
-    constructor(circle: Circle, durations: Array<Duration>) {
+    constructor(circle: Circle, durations: Array<Event>) {
         this.circle = circle
         this.durations = durations;
     }
 
-    public render(ctx: CanvasRenderingContext2D, points: Array<Vector2D>, timestamp: number): void {
+    public update(ctx: CanvasRenderingContext2D, points: Array<Vector2D>, timestamp: number): number {
         ctx.beginPath();
         ctx.arc(this.circle.x, this.circle.y, this.circle.r, 0, 2 * Math.PI);
         ctx.fillStyle = 'transparent';
         ctx.strokeStyle = 'white';
-        if (this.isInDurations(timestamp)) {
+        let incrementScore = 0;
+        const duration = this.getEvent(timestamp);
+        if (duration != null) {
             ctx.strokeStyle = 'red';
         }
 
-        if(this.circle.IsAnyInCircle(points)){
+        if (this.circle.IsAnyInCircle(points)) {
             ctx.fillStyle = 'red';
+            if (duration != null) {
+                incrementScore = duration.onTouched();
+            }
         }
 
         ctx.stroke();
         ctx.fill();
+        return incrementScore;
     }
 
-    public isInDurations(timestamp: number) {
+    public getEvent(timestamp: number): Event | null {
         // TODO: More efficient algorithm.
 
         for (const duration of this.durations) {
             if (duration.isInDuration(timestamp)) {
-                return true;
+
+                return duration;
             }
         }
-        return false;
-    }
-}
-
-export class Duration {
-    public start: number
-    public duration: number
-
-    constructor(start: number, duration: number) {
-        this.start = start;
-        this.duration = duration;
-    }
-
-    public isInDuration(timestamp: number) {
-        return this.start <= timestamp && timestamp <= this.start + this.duration;
+        return null
     }
 }

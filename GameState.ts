@@ -1,13 +1,16 @@
 import { Vector2D } from '@tensorflow-models/posenet/dist/types';
 import { Circle } from './util'
-import { Target, Duration } from "./Target";
+import { Target } from "./Target";
+import { Event } from './Score'
 
 export class GameState {
     private readonly targets: Array<Target>;
     private startTime: number;
+    public score: number;
 
     constructor() {
         this.targets = new Array<Target>();
+        this.score = 0;
     }
 
     public start(): void {
@@ -25,11 +28,12 @@ export class GameState {
             hands.push(this.getHandPosition(points[8], points[10]));
         }
         this.targets.forEach(target => {
-            target.render(ctx, hands, gameTime);
+            this.score += target.update(ctx, hands, gameTime);
         });
+        console.log(this.score);
     }
 
-    public addTarget(circle: Circle, durations: Array<Duration>) {
+    public addTarget(circle: Circle, durations: Array<Event>) {
         this.targets.push(new Target(circle, durations))
     }
 
