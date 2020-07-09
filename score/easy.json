@@ -48,7 +48,8 @@
             "end": 20000,
             "circleNumber": 9,
             "point": 100
-        },        {
+        },        
+        {
             "start": 20000,
             "end": 22000,
             "circleNumber": 2,
