@@ -108,6 +108,8 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
   async function poseDetectionFrame() {
     // Begin monitoring code for frames per second
     stats.begin();
+    const remainingTime = gameState.getRemainingTime()
+    utils.showRemainingTime(remainingTime)
 
     let poses: posenet.Pose[] = [];
     const pose = await guiState.net.estimatePoses(video, {
@@ -145,6 +147,13 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
     if (points) {
       gameState.update(points, ctx);
     }
+
+    if (remainingTime <= 0){
+      // FIXME: 難易度の取り方が雑
+      const params = new URLSearchParams(window.location.search);
+      utils.jumpToResultPage(gameState.score, params.get('level').toLowerCase())
+    }
+
     // End monitoring code for frames per second
     stats.end();
     requestAnimationFrame(poseDetectionFrame);
