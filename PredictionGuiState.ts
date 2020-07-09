@@ -3,40 +3,40 @@ import * as posenet from '@tensorflow-models/posenet';
 import { isMobile } from './demo_util';
 
 export class PredictionGuiState {
-    algorithm: string;
     input: InputConfig;
     singlePoseDetection: SinglePoseDetectionConfig;
-    multiPoseDetection: MultiPoseDetectionConfig;
     output: OutputConfig;
     net: posenet.PoseNet;
     camera: string;
-    multiplier: posenet.MobileNetMultiplier;
-    changeToMultiplier: posenet.MobileNetMultiplier;
-    inputResolution: posenet.InputResolution;
-    changeToInputResolution: posenet.InputResolution;
-    outputStride: posenet.PoseNetOutputStride;
-    changeToOutputStride: posenet.PoseNetOutputStride;
-    architecture: posenet_types.PoseNetArchitecture;
-    changeToArchitecture: posenet_types.PoseNetArchitecture;
-    quantBytes: posenet_types.PoseNetQuantBytes;
-    changeToQuantBytes: posenet_types.PoseNetQuantBytes;
-    tryResNetButton: any;
 
     public static get Default(): PredictionGuiState {
         let ret = new PredictionGuiState();
         ret.input = InputConfig.Default;
         ret.output = OutputConfig.Default;
         ret.singlePoseDetection = SinglePoseDetectionConfig.Default;
-        ret.multiPoseDetection = MultiPoseDetectionConfig.Default;
-        ret.algorithm = 'multi-pose';
         return ret;
     }
 }
 
-const defaultMobileNetStride = 16;
+// NN type to use for prediction
+const defaultArchitecture: posenet_types.PoseNetArchitecture = "MobileNetV1";
+//const defaultArchitecture: posenet_types.PoseNetArchitecture = 'ResNet50';
+
+///////////// MobileNet Configs //////////////////////
+// Select from 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800
 const defaultMobileNetInputResolution = 500;
-const defaultQuantBytes = 2;
-const defaultMobileNetMultiplier = isMobile() ? 0.50 : 0.75;
+const defaultMobileNetMultiplier = isMobile() ? 0.50 : 0.75; // 0.5, 0.75 or 1.0
+const defaultMobileNetStride = 16; // 8 or 16
+
+///////////// ResNet Configs //////////////////////
+// Select from 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800
+const defaultResNetInputResolution = 250;
+const defaultResNetMultiplier = 1.0; // Always 1.0
+const defaultResNetStride = 32; // 32 or 16
+
+const defaultQuantBytes = 2; // 1, 2 or 4
+const minPoseConfidence = 0.1;
+const minPartConfidence = 0.5;
 
 class InputConfig {
     architecture: posenet_types.PoseNetArchitecture;
@@ -47,10 +47,16 @@ class InputConfig {
 
     public static get Default(): InputConfig {
         let ret = new InputConfig();
-        ret.architecture = 'MobileNetV1';
-        ret.outputStride = defaultMobileNetStride;
-        ret.inputResolution = defaultMobileNetInputResolution;
-        ret.multiplier = defaultMobileNetMultiplier;
+        ret.architecture = defaultArchitecture;
+        if (ret.architecture == 'MobileNetV1') {
+            ret.outputStride = defaultMobileNetStride;
+            ret.inputResolution = defaultMobileNetInputResolution;
+            ret.multiplier = defaultMobileNetMultiplier;
+        } else {
+            ret.outputStride = defaultResNetStride;
+            ret.inputResolution = defaultResNetInputResolution;
+            ret.multiplier = defaultResNetMultiplier;
+        }
         ret.quantBytes = defaultQuantBytes;
         return ret;
     }
@@ -73,23 +79,8 @@ class SinglePoseDetectionConfig {
     minPartConfidence: number;
     public static get Default(): SinglePoseDetectionConfig {
         let ret = new SinglePoseDetectionConfig();
-        ret.minPoseConfidence = 0.1;
-        ret.minPartConfidence = 0.5;
-        return ret;
-    }
-}
-
-class MultiPoseDetectionConfig {
-    maxPoseDetections: number;
-    minPoseConfidence: number;
-    minPartConfidence: number;
-    nmsRadius: number;
-    public static get Default(): MultiPoseDetectionConfig {
-        let ret = new MultiPoseDetectionConfig();
-        ret.maxPoseDetections = 5;
-        ret.minPoseConfidence = 0.15;
-        ret.minPartConfidence = 0.1;
-        ret.nmsRadius = 30.0;
+        ret.minPoseConfidence = minPoseConfidence;
+        ret.minPartConfidence = minPartConfidence;
         return ret;
     }
 }

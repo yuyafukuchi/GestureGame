@@ -4,7 +4,7 @@ import HardData = require("./score/hard.json")
 
 export class Event {
     public start: number;
-    public end:   number;
+    public end: number;
     public circleNumber: number;
     public isTouched: boolean;
     // 得点
@@ -27,6 +27,10 @@ export class Event {
         this.isTouched = true
         return this.point
     }
+
+    public isInDuration(timestamp: number) {
+        return this.start <= timestamp && timestamp <= this.end;
+    }
 }
 
 export class Score {
@@ -42,8 +46,8 @@ export class Score {
         return this.events.filter(event => event.start <= time && time <= event.end);
     }
 
-    private loadScore(level: String): Array<Event>{
-        switch(level) {
+    private loadScore(level: String): Array<Event> {
+        switch (level) {
             case "easy":
                 var data = EasyData.data
                 break;
@@ -58,7 +62,7 @@ export class Score {
                 return null
         }
 
-        var events: Array<Event>
+        var events = new Array<Event>();
         data.forEach(element => {
             var event = new Event(element.start, element.end, element.circleNumber, element.point);
             events.push(event)
