@@ -160,25 +160,23 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
  * available camera devices, and setting off the detectPoseInRealTime function.
  */
 export async function bindPage() {
-  // TODO: Uncomment after new loading pane is implemented
-  //toggleLoadingUI(true);
+  toggleLoadingUI(true);
   const net = await posenet.load(guiState.input);
-  //toggleLoadingUI(false);
-
   let video;
-
+  
   try {
     video = await loadVideo();
   } catch (e) {
     let info = document.getElementById('info');
     info.textContent = 'this browser does not support video capture,' +
-      'or this device does not have a camera';
+    'or this device does not have a camera';
     info.style.display = 'block';
     throw e;
   }
-
   setupGui([], net);
   setupFPS();
+  toggleLoadingUI(false);
+
   let gameState = new GameState()
 
   for (let i = 1; i < 10; i++) {

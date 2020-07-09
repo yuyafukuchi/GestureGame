@@ -36,13 +36,11 @@ export function isMobile() {
  * Toggles between the loading UI and the main canvas UI.
  */
 export function toggleLoadingUI(
-  showLoadingUI: boolean, loadingDivId = 'loading', mainDivId = 'main') {
+  showLoadingUI: boolean, loadingDivId = 'loading') {
   if (showLoadingUI) {
     document.getElementById(loadingDivId).style.display = 'block';
-    document.getElementById(mainDivId).style.display = 'none';
   } else {
     document.getElementById(loadingDivId).style.display = 'none';
-    document.getElementById(mainDivId).style.display = 'block';
   }
 }
 
