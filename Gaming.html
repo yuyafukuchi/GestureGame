@@ -68,15 +68,25 @@
 	</style>
 
 </head>
-<body class="global" onload="set_diffi()"><!--  -->
+<body class="global">
 	<div id="upper_bar">
 		<div class="btn" id="score_box">0</div>
 		<div id="pause_btn"> pause</div>
-		<div class="btn" id="remaining_time"> <!-- Time: 60s --></div>
+		<div class="btn" id="remaining_time">
+			<!-- Time: 60s -->
+		</div>
 
 	</div>
-	<div id="game_box"></div>
-    
-    <script src="camera.ts"></script>
+	<div id="game_box">
+
+		<!-- <div id='main' style='display:none'> -->
+		<div id='main'>
+			<video id="video">
+			</video>
+		</div>
+		<canvas id="output">
+	</div>
+	<script src="camera.ts"></script>
 </body>
+
 </html>

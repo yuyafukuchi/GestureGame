@@ -160,9 +160,10 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
  * available camera devices, and setting off the detectPoseInRealTime function.
  */
 export async function bindPage() {
-  toggleLoadingUI(true);
+  // TODO: Uncomment after new loading pane is implemented
+  //toggleLoadingUI(true);
   const net = await posenet.load(guiState.input);
-  toggleLoadingUI(false);
+  //toggleLoadingUI(false);
 
   let video;
 
@@ -202,5 +203,3 @@ navigator.getUserMedia = navigator.getUserMedia;
 
 // kick off the demo
 bindPage();
-
-
