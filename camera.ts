@@ -24,8 +24,8 @@ import { drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI } from './demo_u
 import { Duration } from './Target';
 import { GameState } from './GameState'
 
-const videoWidth = 600;
-const videoHeight = 500;
+const videoWidth = 900;
+const videoHeight = 750;
 const stats = new Stats();
 
 /**
@@ -182,9 +182,9 @@ export async function bindPage() {
   let gameState = new GameState()
 
   for (let i = 1; i < 10; i++) {
-    const centerX = 300;
-    const centerY = 275;
-    const alignR = 240;
+    const centerX = 450;
+    const centerY = 405;
+    const alignR = 350;
     const durations = [
       new Duration(0 + 500 * i, 500),
       new Duration(5000 + 500 * i, 500),
@@ -193,7 +193,7 @@ export async function bindPage() {
       new Duration(20000 + 500 * i, 500),
       new Duration(25000 + 500 * i, 500),
     ];
-    gameState.addTarget(new utils.Circle(centerX - alignR * Math.sin(Math.PI / 5 * i), centerY + alignR * Math.cos(Math.PI / 5 * i), 30), durations);
+    gameState.addTarget(new utils.Circle(centerX - alignR * Math.sin(Math.PI / 5 * i), centerY + alignR * Math.cos(Math.PI / 5 * i), 50), durations);
   }
   gameState.start();
   detectPoseInRealTime(video, net, gameState);
