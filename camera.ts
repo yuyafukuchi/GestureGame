@@ -392,7 +392,7 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
     // For each pose (i.e. person) detected in an image, loop through the poses
     // and draw the resulting skeleton and keypoints if over certain confidence
     // scores
-    let handPoints = new Array<posenet_types.Vector2D>();
+    let points: Array<posenet_types.Vector2D>;
     poses.forEach(({ score, keypoints }) => {
       if (score >= minPoseConfidence) {
         if (guiState.output.showPoints) {
@@ -401,10 +401,12 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
         if (guiState.output.showSkeleton) {
           drawSkeleton(keypoints, minPartConfidence, ctx);
         }
-        handPoints = [keypoints[9].position, keypoints[10].position]
+        points = keypoints.map(function (kp) { return kp.position });
       }
     });
-    gameState.update(handPoints, ctx);
+    if (points) {
+      gameState.update(points, ctx);
+    }
     // End monitoring code for frames per second
     stats.end();
     requestAnimationFrame(poseDetectionFrame);
@@ -463,5 +465,8 @@ export async function bindPage() {
 }
 
 navigator.getUserMedia = navigator.getUserMedia;
+
 // kick off the demo
 bindPage();
+
+

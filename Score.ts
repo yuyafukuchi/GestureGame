@@ -1,3 +1,7 @@
+import EasyData = require("./score/easy.json")
+import NormalData = require("./score/normal.json")
+import HardData = require("./score/hard.json")
+
 export class Event {
     public start: number;
     public end:   number;
@@ -27,13 +31,40 @@ export class Event {
 
 export class Score {
     public events: Array<Event>;
+    public level: String
 
-    constructor(events: Array<Event>) {
-        this.events = events;
+    constructor(level: String) {
+        this.events = this.loadScore(level);
+        this.level = level;
     }
 
     public getEvents(time: number): Array<Event> {
         return this.events.filter(event => event.start <= time && time <= event.end);
+    }
+
+    private loadScore(level: String): Array<Event>{
+        switch(level) {
+            case "easy":
+                var data = EasyData.data
+                break;
+            case "normal":
+                var data = NormalData.data
+                break;
+            case "hard":
+                var data = HardData.data
+                break
+            default:
+                console.log("please input correct level")
+                return null
+        }
+
+        var events: Array<Event>
+        data.forEach(element => {
+            var event = new Event(element.start, element.end, element.circleNumber, element.point);
+            events.push(event)
+        });
+
+        return events
     }
 
 }
