@@ -66,24 +66,20 @@
 		}
 	</style>
 	<script type="text/javascript">
-
-		function jump(diff)  
-        {  
-			var num=diff;
-            var myurl="Gaming.html"+"?"+"parm1="+num;
-            window.location.assign(encodeURI(myurl));  
-        } 
-
-		function difficulty(diff){
-			// var start=new Date().getTime();
-			// while(new Date().getTime()<start+1000);//delay for 1s
-			var num =diff; 
-			if (num==1) {alert("Lv: Easy");jump(1);}
-			if (num==2) {alert("Lv: Normal");jump(2);}
-			if (num==3) {alert("Lv: Hard");jump(3);}
-			
+		function jump(diff) {
+			var num = diff;
+			var myurl = "Gaming.html" + "?" + "level=" + num;
+			window.location.assign(encodeURI(myurl));
 		}
 
+		function difficulty(diff) {
+			// var start=new Date().getTime();
+			// while(new Date().getTime()<start+1000);//delay for 1s
+			var num = diff;
+			if (num == 1) { alert("Lv: Easy"); jump('easy'); }
+			if (num == 2) { alert("Lv: Normal"); jump('normal'); }
+			if (num == 3) { alert("Lv: Hard"); jump('hard'); }
+		}
 	</script>
 </head>
 <body class="global">
