@@ -115,7 +115,6 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
       decodingMethod: 'single-person'
     });
     poses = poses.concat(pose);
-    console.log(poses.length);
     let minPoseConfidence: number = guiState.singlePoseDetection.minPoseConfidence;
     let minPartConfidence: number = guiState.singlePoseDetection.minPartConfidence;
 
