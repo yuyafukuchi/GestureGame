@@ -22,3 +22,25 @@ export class Circle {
         return false;
     }
 }
+
+
+export function setRemainingTime(countdown: number) {
+    if (countdown>=0) {
+        document.getElementById('remaining_time').innerHTML="Time: "+countdown+"s";
+        countdown--;  
+        setTimeout(function() {setRemainingTime(countdown)} ,1000);
+    }
+    else
+        // FIXME: Scoreの値からpoint, levelを引数として与える
+        jumpToResultPage(111, "1");
+}
+
+function jumpToResultPage(point: number, level: String) {  
+    var myurl="Result.html"+"?"+"parm1="+point+"&parm2="+level;  //pass scores and current lv
+    window.location.assign(encodeURI(myurl));  
+}
+
+export function showScore(score: number){
+    var p = document.getElementById('score_box');
+    p.innerHTML = score.toString();
+}

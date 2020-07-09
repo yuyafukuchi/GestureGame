@@ -31,9 +31,11 @@ export class Event {
 
 export class Score {
     public events: Array<Event>;
+    public level: String
 
     constructor(level: String) {
         this.events = this.loadScore(level);
+        this.level = level;
     }
 
     public getEvents(time: number): Array<Event> {
