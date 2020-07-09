@@ -11,7 +11,6 @@
   "dependencies": {
     "@tensorflow-models/posenet": "^2.2.1",
     "@tensorflow/tfjs": "~1.7.4",
-    "@types/dat.gui": "^0.7.5",
     "@types/stats.js": "^0.17.0",
     "parcel-plugin-static-files-copy": "^2.4.3",
     "stats.js": "^0.17.0"
@@ -34,7 +33,6 @@
     "babel-preset-es2017": "^6.24.1",
     "clang-format": "~1.4.0",
     "cross-env": "^7.0.2",
-    "dat.gui": "^0.7.2",
     "eslint": "^7.0.0",
     "eslint-config-google": "^0.14.0",
     "parcel-bundler": "~1.12.4",

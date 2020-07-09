@@ -55,28 +55,60 @@
 /*			width: 600px;
 			height: 350px;*/
 			margin-top: 1%;
-			padding-bottom: 40%;
-			width: 80%;
-			height: 0;
+			/* padding-bottom: 40%; */
+			width: 900px;
+			height: 750px;
 			border: 3px solid blue;
 			text-align: center;
 			font-size: 50px;
-
 		}
+		#loadingpic{
+			margin: auto;
+			margin-top: 19%;
+			height: 60px;
+			width: 60px;
 
-	
+			background-image: url(./image/loading.png);
+			background-repeat: no-repeat;/*重复方式*/
+			background-size: contain; /*图片填充*/
+		}
+		#word{
+			margin: auto;
+			text-align: center;
+			font-family:  Consolas, monaco, monospace;
+			font-size: 15px;
+			font-weight: bold;
+		}
+		#loading{
+			z-index: 10;
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			background-color: #E0E0E0;
+		}
 	</style>
 
 </head>
-<body class="global" onload="set_diffi()"><!--  -->
+<body class="global">
+	<div id="loading">
+		<div id="loadingpic"></div>
+		<div id="word">Loading...</div>	
+	</div>
 	<div id="upper_bar">
 		<div class="btn" id="score_box">0</div>
 		<div id="pause_btn"> pause</div>
-		<div class="btn" id="remaining_time"> <!-- Time: 60s --></div>
+		<div class="btn" id="remaining_time">
+			<!-- Time: 60s -->
+		</div>
 
 	</div>
-	<div id="game_box"></div>
-    
-    <script src="camera.ts"></script>
+	<div id="game_box">
+		<div id='main' style='display:none'>
+			<video id="video"></video>
+		</div>
+		<canvas id="output">
+	</div>
+	<script src="camera.ts"></script>
 </body>
+
 </html>

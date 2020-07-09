@@ -25,7 +25,6 @@ export class Event {
             return 0
         }
         this.isTouched = true
-        console.log(this.point);
         return this.point
     }
 

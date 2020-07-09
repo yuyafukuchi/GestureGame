@@ -16,7 +16,6 @@
  */
 import * as posenet from '@tensorflow-models/posenet';
 import * as posenet_types from '@tensorflow-models/posenet/dist/types';
-import * as dat from 'dat.gui'
 import * as utils from "./util"
 import { PredictionGuiState } from './PredictionGuiState'
 import Stats = require('stats.js')
@@ -25,8 +24,8 @@ import { drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI } from './demo_u
 import { GameState } from './GameState'
 import { Score } from './Score'
 
-const videoWidth = 600;
-const videoHeight = 500;
+const videoWidth = 900;
+const videoHeight = 750;
 const stats = new Stats();
 
 /**
@@ -68,16 +67,6 @@ async function loadVideo(): Promise<HTMLVideoElement> {
   return video;
 }
 
-const defaultQuantBytes = 2;
-
-const defaultMobileNetMultiplier = isMobile() ? 0.50 : 0.75;
-const defaultMobileNetStride = 16;
-const defaultMobileNetInputResolution = 500;
-
-const defaultResNetMultiplier = 1.0;
-const defaultResNetStride = 32;
-const defaultResNetInputResolution = 250;
-
 const guiState = PredictionGuiState.Default;
 
 /**
@@ -89,160 +78,6 @@ function setupGui(cameras: any[], net: posenet.PoseNet) {
   if (cameras.length > 0) {
     guiState.camera = cameras[0].deviceId;
   }
-
-  const gui = new dat.GUI({ width: 300 });
-
-  // The single-pose algorithm is faster and simpler but requires only one
-  // person to be in the frame or results will be innaccurate. Multi-pose works
-  // for more than 1 person
-  const algorithmController =
-    gui.add(guiState, 'algorithm', ['single-pose', 'multi-pose']);
-
-  // The input parameters have the most effect on accuracy and speed of the
-  // network
-  let input = gui.addFolder('Input');
-  // Architecture: there are a few PoseNet models varying in size and
-  // accuracy. 1.01 is the largest, but will be the slowest. 0.50 is the
-  // fastest, but least accurate.
-  let architectureController =
-    input.add(guiState.input, 'architecture', ['MobileNetV1', 'ResNet50']);
-  guiState.architecture = guiState.input.architecture;
-  // Input resolution:  Internally, this parameter affects the height and width
-  // of the layers in the neural network. The higher the value of the input
-  // resolution the better the accuracy but slower the speed.
-  let inputResolutionController: dat.GUIController = null;
-  function updateGuiInputResolution(
-    inputResolution: posenet.InputResolution,
-    inputResolutionArray: number[],
-  ) {
-    if (inputResolutionController) {
-      inputResolutionController.remove();
-    }
-    guiState.inputResolution = inputResolution;
-    guiState.input.inputResolution = inputResolution;
-    inputResolutionController =
-      input.add(guiState.input, 'inputResolution', inputResolutionArray);
-    inputResolutionController.onChange(function (inputResolution) {
-      guiState.changeToInputResolution = inputResolution;
-    });
-  }
-
-  // Output stride:  Internally, this parameter affects the height and width of
-  // the layers in the neural network. The lower the value of the output stride
-  // the higher the accuracy but slower the speed, the higher the value the
-  // faster the speed but lower the accuracy.
-  let outputStrideController: dat.GUIController = null;
-  function updateGuiOutputStride(outputStride: posenet.PoseNetOutputStride, outputStrideArray: posenet.PoseNetOutputStride[]) {
-    if (outputStrideController) {
-      outputStrideController.remove();
-    }
-    guiState.outputStride = outputStride;
-    guiState.input.outputStride = outputStride;
-    outputStrideController =
-      input.add(guiState.input, 'outputStride', outputStrideArray);
-    outputStrideController.onChange(function (outputStride) {
-      guiState.changeToOutputStride = outputStride;
-    });
-  }
-
-  // Multiplier: this parameter affects the number of feature map channels in
-  // the MobileNet. The higher the value, the higher the accuracy but slower the
-  // speed, the lower the value the faster the speed but lower the accuracy.
-  let multiplierController: dat.GUIController = null;
-  function updateGuiMultiplier(multiplier: posenet.MobileNetMultiplier, multiplierArray: posenet.MobileNetMultiplier[]) {
-    if (multiplierController) {
-      multiplierController.remove();
-    }
-    guiState.multiplier = multiplier;
-    guiState.input.multiplier = multiplier;
-    multiplierController =
-      input.add(guiState.input, 'multiplier', multiplierArray);
-    multiplierController.onChange(function (multiplier) {
-      guiState.changeToMultiplier = multiplier;
-    });
-  }
-
-  // QuantBytes: this parameter affects weight quantization in the ResNet50
-  // model. The available options are 1 byte, 2 bytes, and 4 bytes. The higher
-  // the value, the larger the model size and thus the longer the loading time,
-  // the lower the value, the shorter the loading time but lower the accuracy.
-  let quantBytesController: dat.GUIController = null;
-  function updateGuiQuantBytes(quantBytes: posenet_types.PoseNetQuantBytes, quantBytesArray: posenet_types.PoseNetQuantBytes[]) {
-    if (quantBytesController) {
-      quantBytesController.remove();
-    }
-    guiState.quantBytes = quantBytes;
-    guiState.input.quantBytes = quantBytes;
-    quantBytesController =
-      input.add(guiState.input, 'quantBytes', quantBytesArray);
-    quantBytesController.onChange(function (quantBytes) {
-      guiState.changeToQuantBytes = quantBytes;
-    });
-  }
-
-  function updateGui() {
-    if (guiState.input.architecture === 'MobileNetV1') {
-      updateGuiInputResolution(
-        defaultMobileNetInputResolution,
-        [200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800]);
-      updateGuiOutputStride(defaultMobileNetStride, [8, 16]);
-      updateGuiMultiplier(defaultMobileNetMultiplier, [0.50, 0.75, 1.0]);
-    } else {  // guiState.input.architecture === "ResNet50"
-      updateGuiInputResolution(
-        defaultResNetInputResolution,
-        [200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800]);
-      updateGuiOutputStride(defaultResNetStride, [32, 16]);
-      updateGuiMultiplier(defaultResNetMultiplier, [1.0]);
-    }
-    updateGuiQuantBytes(defaultQuantBytes, [1, 2, 4]);
-  }
-
-  updateGui();
-  input.open();
-  // Pose confidence: the overall confidence in the estimation of a person's
-  // pose (i.e. a person detected in a frame)
-  // Min part confidence: the confidence that a particular estimated keypoint
-  // position is accurate (i.e. the elbow's position)
-  let single = gui.addFolder('Single Pose Detection');
-  single.add(guiState.singlePoseDetection, 'minPoseConfidence', 0.0, 1.0);
-  single.add(guiState.singlePoseDetection, 'minPartConfidence', 0.0, 1.0);
-
-  let multi = gui.addFolder('Multi Pose Detection');
-  multi.add(guiState.multiPoseDetection, 'maxPoseDetections')
-    .min(1)
-    .max(20)
-    .step(1);
-  multi.add(guiState.multiPoseDetection, 'minPoseConfidence', 0.0, 1.0);
-  multi.add(guiState.multiPoseDetection, 'minPartConfidence', 0.0, 1.0);
-  // nms Radius: controls the minimum distance between poses that are returned
-  // defaults to 20, which is probably fine for most use cases
-  multi.add(guiState.multiPoseDetection, 'nmsRadius').min(0.0).max(40.0);
-  multi.open();
-
-  let output = gui.addFolder('Output');
-  output.add(guiState.output, 'showSkeleton');
-  output.add(guiState.output, 'showPoints');
-  output.open();
-
-
-  architectureController.onChange(function (architecture) {
-    // if architecture is ResNet50, then show ResNet50 options
-    updateGui();
-    guiState.changeToArchitecture = architecture;
-  });
-
-  algorithmController.onChange(function (value) {
-    switch (guiState.algorithm) {
-      case 'single-pose':
-        multi.close();
-        single.open();
-        break;
-      case 'multi-pose':
-        single.close();
-        multi.open();
-        break;
-    }
-  });
 }
 
 /**
@@ -271,114 +106,17 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
   canvas.height = videoHeight;
 
   async function poseDetectionFrame() {
-    if (guiState.changeToArchitecture) {
-      // Important to purge variables and free up GPU memory
-      guiState.net.dispose();
-      toggleLoadingUI(true);
-      guiState.net = await posenet.load({
-        architecture: guiState.changeToArchitecture,
-        outputStride: guiState.outputStride,
-        inputResolution: guiState.inputResolution,
-        multiplier: guiState.multiplier,
-      });
-      toggleLoadingUI(false);
-      guiState.architecture = guiState.changeToArchitecture;
-      guiState.changeToArchitecture = null;
-    }
-
-    if (guiState.changeToMultiplier) {
-      guiState.net.dispose();
-      toggleLoadingUI(true);
-      guiState.net = await posenet.load({
-        architecture: guiState.architecture,
-        outputStride: guiState.outputStride,
-        inputResolution: guiState.inputResolution,
-        multiplier: guiState.changeToMultiplier,
-        quantBytes: guiState.quantBytes
-      });
-      toggleLoadingUI(false);
-      guiState.multiplier = guiState.changeToMultiplier;
-      guiState.changeToMultiplier = null;
-    }
-
-    if (guiState.changeToOutputStride) {
-      // Important to purge variables and free up GPU memory
-      guiState.net.dispose();
-      toggleLoadingUI(true);
-      guiState.net = await posenet.load({
-        architecture: guiState.architecture,
-        outputStride: guiState.changeToOutputStride,
-        inputResolution: guiState.inputResolution,
-        multiplier: guiState.multiplier,
-        quantBytes: guiState.quantBytes
-      });
-      toggleLoadingUI(false);
-      guiState.outputStride = guiState.changeToOutputStride;
-      guiState.changeToOutputStride = null;
-    }
-
-    if (guiState.changeToInputResolution) {
-      // Important to purge variables and free up GPU memory
-      guiState.net.dispose();
-      toggleLoadingUI(true);
-      guiState.net = await posenet.load({
-        architecture: guiState.architecture,
-        outputStride: guiState.outputStride,
-        inputResolution: +guiState.changeToInputResolution,
-        multiplier: guiState.multiplier,
-        quantBytes: guiState.quantBytes
-      });
-      toggleLoadingUI(false);
-      guiState.inputResolution = +guiState.changeToInputResolution;
-      guiState.changeToInputResolution = null;
-    }
-
-    if (guiState.changeToQuantBytes) {
-      // Important to purge variables and free up GPU memory
-      guiState.net.dispose();
-      toggleLoadingUI(true);
-      guiState.net = await posenet.load({
-        architecture: guiState.architecture,
-        outputStride: guiState.outputStride,
-        inputResolution: guiState.inputResolution,
-        multiplier: guiState.multiplier,
-        quantBytes: guiState.changeToQuantBytes
-      });
-      toggleLoadingUI(false);
-      guiState.quantBytes = guiState.changeToQuantBytes;
-      guiState.changeToQuantBytes = null;
-    }
-
     // Begin monitoring code for frames per second
     stats.begin();
 
     let poses: posenet.Pose[] = [];
-    let minPoseConfidence: number;
-    let minPartConfidence: number;
-    switch (guiState.algorithm) {
-      case 'single-pose':
-        const pose = await guiState.net.estimatePoses(video, {
-          flipHorizontal: flipPoseHorizontal,
-          decodingMethod: 'single-person'
-        });
-        poses = poses.concat(pose);
-        minPoseConfidence = +guiState.singlePoseDetection.minPoseConfidence;
-        minPartConfidence = +guiState.singlePoseDetection.minPartConfidence;
-        break;
-      case 'multi-pose':
-        let all_poses = await guiState.net.estimatePoses(video, {
-          flipHorizontal: flipPoseHorizontal,
-          decodingMethod: 'multi-person',
-          maxDetections: guiState.multiPoseDetection.maxPoseDetections,
-          scoreThreshold: guiState.multiPoseDetection.minPartConfidence,
-          nmsRadius: guiState.multiPoseDetection.nmsRadius
-        });
-
-        poses = poses.concat(all_poses);
-        minPoseConfidence = +guiState.multiPoseDetection.minPoseConfidence;
-        minPartConfidence = +guiState.multiPoseDetection.minPartConfidence;
-        break;
-    }
+    const pose = await guiState.net.estimatePoses(video, {
+      flipHorizontal: flipPoseHorizontal,
+      decodingMethod: 'single-person'
+    });
+    poses = poses.concat(pose);
+    let minPoseConfidence: number = guiState.singlePoseDetection.minPoseConfidence;
+    let minPartConfidence: number = guiState.singlePoseDetection.minPartConfidence;
 
     ctx.clearRect(0, 0, videoWidth, videoHeight);
 
@@ -422,39 +160,33 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
  */
 export async function bindPage() {
   toggleLoadingUI(true);
-  const net = await posenet.load({
-    architecture: guiState.input.architecture,
-    outputStride: guiState.input.outputStride,
-    inputResolution: guiState.input.inputResolution,
-    multiplier: guiState.input.multiplier,
-    quantBytes: guiState.input.quantBytes
-  });
-  toggleLoadingUI(false);
-
+  const net = await posenet.load(guiState.input);
   let video;
-
+  
   try {
     video = await loadVideo();
   } catch (e) {
     let info = document.getElementById('info');
     info.textContent = 'this browser does not support video capture,' +
-      'or this device does not have a camera';
+    'or this device does not have a camera';
     info.style.display = 'block';
     throw e;
   }
-
   setupGui([], net);
   setupFPS();
-  let gameState = new GameState()
+  toggleLoadingUI(false);
 
-  const events = new Score('easy').events;
+  let gameState = new GameState();
+  const params = new URLSearchParams(window.location.search);
+
+  const events = new Score(params.get('level').toLowerCase()).events;
   for (let i = 1; i < 10; i++) {
-    const centerX = 300;
-    const centerY = 275;
-    const alignR = 240;
+    const centerX = 450;
+    const centerY = 405;
+    const alignR = 350;
     const filtered = events.filter(ev => ev.circleNumber == i);
     gameState.addTarget(new utils.Circle(centerX - alignR * Math.sin(Math.PI / 5 * i),
-      centerY + alignR * Math.cos(Math.PI / 5 * i), 30), filtered);
+      centerY + alignR * Math.cos(Math.PI / 5 * i), 50), filtered);
   }
   gameState.start();
   detectPoseInRealTime(video, net, gameState);
@@ -464,5 +196,3 @@ navigator.getUserMedia = navigator.getUserMedia;
 
 // kick off the demo
 bindPage();
-
-
