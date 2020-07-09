@@ -23,6 +23,14 @@ export class Circle {
     }
 }
 
+<<<<<<< HEAD
+export function addCircle(ctx: CanvasRenderingContext2D, circle: utils.Circle) {
+    ctx.beginPath();
+    ctx.arc(circle.x, circle.y, circle.r, 0, 2 * Math.PI);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+  }
+=======
 
 export function setRemainingTime(countdown: number) {
     if (countdown>=0) {
@@ -44,3 +52,4 @@ export function showScore(score: number){
     var p = document.getElementById('score_box');
     p.innerHTML = score.toString();
 }
+>>>>>>> 7e3f1707c5335f63ebd976d342f902a10fb3e3b8

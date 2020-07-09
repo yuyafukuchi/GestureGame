@@ -147,7 +147,6 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
     }
     // End monitoring code for frames per second
     stats.end();
-
     requestAnimationFrame(poseDetectionFrame);
   }
 
