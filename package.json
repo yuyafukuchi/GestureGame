@@ -13,6 +13,7 @@
     "@tensorflow/tfjs": "~1.7.4",
     "@types/dat.gui": "^0.7.5",
     "@types/stats.js": "^0.17.0",
+    "parcel-plugin-static-files-copy": "^2.4.3",
     "stats.js": "^0.17.0"
   },
   "scripts": {
@@ -56,5 +57,11 @@
   },
   "eslintIgnore": [
     "dist/"
-  ]
+  ],
+  "staticFiles": {
+    "staticPath": {
+      "staticPath": "score",
+      "staticOutDir": "score"
+    }
+  }
 }
