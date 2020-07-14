@@ -23,6 +23,7 @@ import Stats = require('stats.js')
 import { drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI } from './demo_util';
 import { GameState } from './GameState'
 import { Score } from './Score'
+import { ScorePanel } from './ScorePanel'
 
 const videoWidth = 900;
 const videoHeight = 750;
@@ -170,13 +171,13 @@ export async function bindPage() {
   toggleLoadingUI(true);
   const net = await posenet.load(guiState.input);
   let video;
-  
+
   try {
     video = await loadVideo();
   } catch (e) {
     let info = document.getElementById('info');
     info.textContent = 'this browser does not support video capture,' +
-    'or this device does not have a camera';
+      'or this device does not have a camera';
     info.style.display = 'block';
     throw e;
   }
@@ -185,13 +186,11 @@ export async function bindPage() {
   toggleLoadingUI(false);
 
   const params = new URLSearchParams(window.location.search);
-  const level = params.get('level').toLowerCase()
+  const level = params.get('level').toLowerCase();
   const events = new Score(level).events;
-
-  const lastEvent = events[events.length - 1];
-  const gameTime = lastEvent.end
-  let gameState = new GameState(gameTime);
-  utils.showGameLevel(level)
+  const gameTime = Math.max(...events.map(ev => ev.end)) + 1000;
+  const scorePanel = new ScorePanel(level);
+  let gameState = new GameState(scorePanel, gameTime);
 
   for (let i = 1; i < 10; i++) {
     const centerX = 450;

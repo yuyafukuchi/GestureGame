@@ -1,17 +1,21 @@
 import { Vector2D } from '@tensorflow-models/posenet/dist/types';
 import { Circle } from './util'
 import { Target } from "./Target";
-import { Event } from './Score'
+import { Event } from './Score';
+import { ScorePanel } from './ScorePanel';
 
 export class GameState {
     private readonly targets: Array<Target>;
     private startTime: number;
     private gameTime: number;
     public score: number;
+    private scorePanel: ScorePanel;
+    private gameTime: number;
 
-    constructor(gameTime: number) {
+    constructor(scorePanel: ScorePanel, gameTime: number) {
         this.targets = new Array<Target>();
         this.score = 0;
+        this.scorePanel = scorePanel;
         this.gameTime = gameTime;
     }
 
@@ -20,7 +24,7 @@ export class GameState {
     }
 
     public update(points: Vector2D[], ctx: CanvasRenderingContext2D) {
-        const diffTime = performance.now() - this.startTime;
+        const currentTime = performance.now() - this.startTime;
 
         const hands: Vector2D[] = []
         if (points[7] && points[9]) {
@@ -31,8 +35,10 @@ export class GameState {
             hands.push(this.getHandPosition(points[8], points[10]));
         }
         this.targets.forEach(target => {
-            this.score += target.update(ctx, hands, diffTime);
+            this.score += target.update(ctx, hands, currentTime);
         });
+        this.scorePanel.score = this.score;
+        this.scorePanel.time = (this.startTime + this.gameTime - currentTime) / 1000;
         console.log(this.score);
 
     }
