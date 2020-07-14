@@ -9,11 +9,10 @@ export class GameState {
     private gameTime: number;
     public score: number;
 
-    constructor() {
+    constructor(gameTime: number) {
         this.targets = new Array<Target>();
         this.score = 0;
-        // default 60秒
-        this.gameTime = 60000;
+        this.gameTime = gameTime;
     }
 
     public start(): void {

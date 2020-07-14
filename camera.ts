@@ -184,10 +184,14 @@ export async function bindPage() {
   setupFPS();
   toggleLoadingUI(false);
 
-  let gameState = new GameState();
   const params = new URLSearchParams(window.location.search);
+  const level = params.get('level').toLowerCase()
+  const events = new Score(level).events;
 
-  const events = new Score(params.get('level').toLowerCase()).events;
+  const lastEvent = events[events.length - 1];
+  const gameTime = lastEvent.end
+  let gameState = new GameState(gameTime);
+
   for (let i = 1; i < 10; i++) {
     const centerX = 450;
     const centerY = 405;
