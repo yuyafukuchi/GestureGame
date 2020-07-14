@@ -10,12 +10,14 @@ export class GameState {
     public score: number;
     private scorePanel: ScorePanel;
     private gameTime: number;
+    public level: string;
 
-    constructor(scorePanel: ScorePanel, gameTime: number) {
+    constructor(scorePanel: ScorePanel, gameTime: number, level: string) {
         this.targets = new Array<Target>();
         this.score = 0;
         this.scorePanel = scorePanel;
         this.gameTime = gameTime;
+        this.level = level;
     }
 
     public start(): void {

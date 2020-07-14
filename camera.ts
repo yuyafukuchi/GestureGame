@@ -150,9 +150,7 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
     const remainingTime = gameState.getRemainingTime()
     // ゲーム終了かどうかを判断
     if (remainingTime <= 0){
-      const params = new URLSearchParams(window.location.search);
-      const level = params.get('level').toLowerCase()
-      utils.jumpToResultPage(gameState.score, level)
+      utils.jumpToResultPage(gameState.score, gameState.level)
     }
 
     // End monitoring code for frames per second
@@ -190,7 +188,7 @@ export async function bindPage() {
   const events = new Score(level).events;
   const gameTime = Math.max(...events.map(ev => ev.end)) + 1000;
   const scorePanel = new ScorePanel(level);
-  let gameState = new GameState(scorePanel, gameTime);
+  let gameState = new GameState(scorePanel, gameTime, level);
 
   for (let i = 1; i < 10; i++) {
     const centerX = 450;
