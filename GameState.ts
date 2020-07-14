@@ -7,7 +7,6 @@ import { ScorePanel } from './ScorePanel';
 export class GameState {
     private readonly targets: Array<Target>;
     private startTime: number;
-    private gameTime: number;
     public score: number;
     private scorePanel: ScorePanel;
     private gameTime: number;
@@ -45,10 +44,6 @@ export class GameState {
 
     public addTarget(circle: Circle, durations: Array<Event>) {
         this.targets.push(new Target(circle, durations))
-    }
-
-    public setGameTime(gameTime: number) {
-        this.gameTime = gameTime
     }
 
     public getRemainingTime(): number {

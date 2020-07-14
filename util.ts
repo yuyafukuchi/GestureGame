@@ -30,21 +30,8 @@ export function addCircle(ctx: CanvasRenderingContext2D, circle: Circle) {
     ctx.fill();
   }
 
-export function showRemainingTime(countdown: number) {
-    var remainingTime = Math.floor(countdown / 1000); // 切り捨て
-    document.getElementById('remaining_time').innerHTML= remainingTime.toString();
-}
-
-export function showGameLevel(level: string) {
-    document.getElementById('mode').innerHTML= level;
-}
-
 export function jumpToResultPage(point: number, level: String) {  
     var myurl="Result.html"+"?"+"parm1="+point+"&parm2="+level;  //pass scores and current lv
     window.location.assign(encodeURI(myurl));  
 }
- 
-export function showScore(score: number){
-    var p = document.getElementById('score_box');
-    p.innerHTML = score.toString();
-}
+

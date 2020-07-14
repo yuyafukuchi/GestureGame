@@ -109,9 +109,7 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
   async function poseDetectionFrame() {
     // Begin monitoring code for frames per second
     stats.begin();
-    const remainingTime = gameState.getRemainingTime()
-    utils.showRemainingTime(remainingTime)
-
+  
     let poses: posenet.Pose[] = [];
     const pose = await guiState.net.estimatePoses(video, {
       flipHorizontal: flipPoseHorizontal,
@@ -149,6 +147,8 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
       gameState.update(points, ctx);
     }
 
+    const remainingTime = gameState.getRemainingTime()
+    // ゲーム終了かどうかを判断
     if (remainingTime <= 0){
       const params = new URLSearchParams(window.location.search);
       const level = params.get('level').toLowerCase()
