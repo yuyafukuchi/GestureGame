@@ -191,6 +191,7 @@ export async function bindPage() {
   const lastEvent = events[events.length - 1];
   const gameTime = lastEvent.end
   let gameState = new GameState(gameTime);
+  utils.showGameLevel(level)
 
   for (let i = 1; i < 10; i++) {
     const centerX = 450;
