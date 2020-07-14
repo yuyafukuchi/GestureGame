@@ -36,7 +36,7 @@ export function showRemainingTime(countdown: number) {
 }
 
 export function jumpToResultPage(point: number, level: String) {  
-    var myurl="Result.html"+"?"+"parm1="+point+"&parm2="+level;  //pass scores and current lv
+    var myurl="result.html"+"?"+"parm1="+point+"&parm2="+level;  //pass scores and current lv
     window.location.assign(encodeURI(myurl));  
 }
 

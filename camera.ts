@@ -149,9 +149,9 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
     }
 
     if (remainingTime <= 0){
-      // FIXME: 難易度の取り方が雑
       const params = new URLSearchParams(window.location.search);
-      utils.jumpToResultPage(gameState.score, params.get('level').toLowerCase())
+      const level = params.get('level').toLowerCase()
+      utils.jumpToResultPage(gameState.score, level)
     }
 
     // End monitoring code for frames per second
