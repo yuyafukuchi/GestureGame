@@ -13,7 +13,7 @@
 		}
 
 		.global{
-			margin: 0px; 
+			margin: 0px;
 			padding: 0px;
 			background-color: #FFFFFF;
 		}
@@ -48,7 +48,7 @@
 
 		#remaining_time{
 			float:right;
-			border-radius: 5px 0 0 5px; 
+			border-radius: 5px 0 0 5px;
 		}
 		#game_box{
 			margin: auto;
@@ -118,13 +118,23 @@
 			position: fixed;
 			background-color: #E0E0E0;
 		}
+
+		.instruct{
+			position: absolute;
+			margin: auto;
+			bottom: 150px;
+			left: 0px;
+			right: 0px;
+			width: 350px;
+			height: 350px;
+		}
 	</style>
 
 </head>
 <body class="global">
 	<div id="loading">
 		<div id="loadingpic"></div>
-		<div id="word">Loading...</div>	
+		<div id="word">Loading...</div>
 	</div>
 	<div id="upper_bar">
 
@@ -138,7 +148,8 @@
 		<!-- <div id="pause_btn"> pause</div> -->
 
 	</div>
-	<div id="game_box">
+	<div id="game_box" style="position: relative;">
+		<img src="image/human.png" alt="instructHuman" class="instruct">
 		<div id='main' style='display:none'>
 			<video id="video"></video>
 		</div>
