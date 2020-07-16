@@ -73,10 +73,21 @@
 			background-size: contain; /*图片填充*/
 		}
 
-		.figure {/*親div*/
-			position: relative;/*相対配置*/
-			width: 825px;
-			font-family: 'arial unicode ms';
+        #test_float {
+            background-color: transparent;
+            width: 900px;
+            height: 200px;
+            position: fixed;
+			top: 50%;
+			margin: auto;
+        }
+
+		#cdnum{
+			text-align: center;
+			color: #FFFFFF;
+			font-family:Gill Sans, sans-serif;
+			font-size: 80px;
+			font-weight: 700;
 		}
 
 		.figure #mode {
@@ -101,7 +112,7 @@
 		}
 
 		.figure img {
-			width: 100%;
+			width: 750px;
 		}
 
 		#word{
@@ -124,21 +135,24 @@
 <body class="global">
 	<div id="loading">
 		<div id="loadingpic"></div>
-		<div id="word">Loading...</div>	
+		<div id="word">Loading...</div>
 	</div>
 	<div id="upper_bar">
-
+		
 		<div class="figure">
 			<img src="image/scoreboard.png" alt="scoreboard">
 			<p id="score">0</p>
 			<p id="mode">1</p>
 			<p id="remaining_time">0</p>
 		</div>
-
+		
 		<!-- <div id="pause_btn"> pause</div> -->
-
+		
 	</div>
 	<div id="game_box">
+		<div id="test_float">
+			<div id="cdnum">3</div>
+		</div>
 		<div id='main' style='display:none'>
 			<video id="video"></video>
 		</div>
