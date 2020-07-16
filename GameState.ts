@@ -21,6 +21,7 @@ export class GameState {
     public start(): void {
         this.startTime = performance.now();
     }
+
     public update(points: Vector2D[], ctx: CanvasRenderingContext2D) {
         const currentTime = performance.now() - this.startTime;
 
@@ -42,6 +43,12 @@ export class GameState {
 
     public addTarget(circle: Circle, durations: Array<Event>) {
         this.targets.push(new Target(circle, durations))
+    }
+
+    public getRemainingTime(): number {
+        const diffTime = performance.now() - this.startTime;
+        const remainTime = this.gameTime - diffTime
+        return remainTime
     }
 
     private getHandPosition(elbow: Vector2D, wrist: Vector2D): Vector2D {
