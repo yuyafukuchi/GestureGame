@@ -63,16 +63,40 @@
 			font-size: 20px;
 			text-indent: 20px;
 			font-weight: bold;
-
-
 		}
+
+        #test_float {
+        	/*margin-top: 30px;*/
+            background-color: transparent;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 50%;
+			top: 50%;
+			margin-top: -50px;
+			margin-left: -50px;
+			/*display: none;*/
+            /*top: 0;*/
+        }
+
+		#cdnum{
+			padding-top: 30px;
+			text-align: center;
+			color: #000000;
+			font-family:Gill Sans, sans-serif;
+			font-size: 30px;
+			font-weight: 700;
+		}
+
+
 	</style>
+
 
 </head>
 
-<body class="global">
+<body class="global" onload="countDown()">
 	<div id="home"> 
-		<a href="index.html">Home</a>
+		<a href="Home.html">Home</a>
 	</div>
 	<div id="htp_box">
 		<div id="title_box">
@@ -83,7 +107,15 @@
 			<p id="manual">2. Move your body on the screen</p>
 			<p id="manual">3. Reach <span style="color: red;">Red Circle</span> to <span style="color: green;">Get Score</span></p>
 			<p id="manual">4. Follow them for the higher Scores!</p>
+			
 		</div>
-	</div>
+		<div id="test_float">
+			<div id="cdnum"> 3 </div>
+		</div>
+
+
+
+
+	
 </body>
 </html>
