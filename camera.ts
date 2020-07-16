@@ -109,7 +109,7 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
   async function poseDetectionFrame() {
     // Begin monitoring code for frames per second
     stats.begin();
-  
+
     let poses: posenet.Pose[] = [];
     const pose = await guiState.net.estimatePoses(video, {
       flipHorizontal: flipPoseHorizontal,
