@@ -39,7 +39,6 @@ export class GameState {
         this.scorePanel.score = this.score;
         this.scorePanel.time = (this.startTime + this.gameTime - currentTime) / 1000;
         console.log(this.score);
-
     }
 
     public addTarget(circle: Circle, durations: Array<Event>) {
