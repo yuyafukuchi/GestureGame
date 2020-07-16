@@ -67,8 +67,8 @@ class OutputConfig {
     showPoints: boolean;
     public static get Default(): OutputConfig {
         let ret = new OutputConfig();
-        ret.showSkeleton = true;
-        ret.showPoints = true;
+        ret.showSkeleton = false;
+        ret.showPoints = false;
 
         return ret;
     }
