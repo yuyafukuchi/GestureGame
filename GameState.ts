@@ -16,6 +16,7 @@ export class GameState {
         this.score = 0;
         this.scorePanel = scorePanel;
         this.gameTime = gameTime;
+        this.startTime = NaN;
     }
 
     public start(): void {
