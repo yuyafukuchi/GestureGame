@@ -18,6 +18,7 @@ export class Target {
         ctx.arc(this.circle.x, this.circle.y, this.circle.r, 0, 2 * Math.PI);
         ctx.fillStyle = 'transparent';
         ctx.strokeStyle = 'white';
+        ctx.lineWidth = 7;
         let incrementScore = 0;
         const duration = this.getEvent(timestamp);
         if (duration != null) {
@@ -35,6 +36,10 @@ export class Target {
                 this.isTouched = true;
             }
         }
+
+        ctx.stroke();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'black';
 
         ctx.stroke();
         ctx.fill();
