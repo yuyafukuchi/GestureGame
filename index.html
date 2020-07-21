@@ -5,9 +5,7 @@
 	<meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-
 	<title>Home</title>
-
 
 	<style type="text/css">
 		.global{
@@ -96,49 +94,38 @@
 			background-color: #FD838B;
 		}
 	</style>
-	<script type="text/javascript">
-		function jump(diff) {
-			var num = diff;
-			var myurl = "Gaming.html" + "?" + "level=" + num;
-			window.location.assign(encodeURI(myurl));
-		}
-
-		function difficulty(diff) {
-			// var start=new Date().getTime();
-			// while(new Date().getTime()<start+1000);//delay for 1s
-			var num = diff;
-			if (num == 1) { alert("Lv: Easy"); jump('easy'); }
-			if (num == 2) { alert("Lv: Normal"); jump('normal'); }
-			if (num == 3) { alert("Lv: Hard"); jump('hard'); }
-		}
-
-
-	</script>
 </head>
 
-<body class="global" ><!-- onload="play_bgm()" --> <!-- start bgm after loading-->
+<body class="global">
+	<!-- onload="play_bgm()" -->
+	<!-- start bgm after loading-->
 	<div id="top_bar">
 		<div class="top_button" id="HowToPlay">
 			<a href="HowToPlay.html">?</a>
 		</div>
-		<!-- <div class="top_button" id="mute" onclick="play_bgm()">/</div> --> <!-- bgm on/off button -->
 	</div>
 	<div id="game_icon"></div>
 	<div id="diffi_part">
-		<div class="diffi_button" id="easy" onclick="difficulty(1)"> <!-- button easy -->
-			Easy
-		</div>
+		<!-- button easy -->
+		<a href="./Gaming.html?level=easy">
+			<div class="diffi_button" id="easy">
+				Easy
+			</div>
+		</a>
 
-		<div class="diffi_button" id="normal" onclick="difficulty(2)"> <!-- button normal -->
-			Normal
+		<!-- button normal -->
+		<a href="./Gaming.html?level=normal">
+			<div class="diffi_button" id="normal" onclick="difficulty(2)">
+				Normal
+			</div>
+		</a>
 
-		</div>
-	
-		<div class="diffi_button" id="hard" onclick="difficulty(3)"> <!-- button hard -->
-			Hard
-
-		</div>
-
+		<!-- button hard -->
+		<a href="./Gaming.html?level=normal">
+			<div class="diffi_button" id="hard" onclick="difficulty(3)">
+				Hard
+			</div>
+		</a>
 	</div>
 </body>
 </html>
