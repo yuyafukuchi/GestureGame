@@ -122,11 +122,11 @@
 		#instruct-image{
 			position: absolute;
 			margin: auto;
-			bottom: 150px;
+			bottom: 0px;
 			left: 0px;
 			right: 0px;
-			width: 350px;
-			height: 350px;
+			width: 600px;
+			height: 600px;
 		}
 
 		#instruct-text{
@@ -162,7 +162,10 @@
 	</div>
 	<div id="game_box" style="position: relative;">
 		<div id="instruct">
-			<p id="instruct-text">PC画面を垂直にして、 \n この画像に体を当てはめてください</p>
+			<div id="instruct-text">
+				<p>PC画面を垂直にしてください</p>
+				<p>この画像に体を当てはめてください</p>
+			</div>
 			<img src="image/human.png" alt="instructHuman" id="instruct-image">
 		</div>
 		<div id='main' style='display:none'>
@@ -176,7 +179,7 @@
 			console.log("delete instruct")
 			document.getElementById("instruct").style.display = "none";
 		}
-		 setTimeout(deleteInstruct, 10000);
+		 setTimeout(deleteInstruct, 25000);
 	</script>
 </body>
 
