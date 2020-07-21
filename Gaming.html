@@ -119,7 +119,7 @@
 			background-color: #E0E0E0;
 		}
 
-		.instruct{
+		#instruct-image{
 			position: absolute;
 			margin: auto;
 			bottom: 150px;
@@ -128,9 +128,21 @@
 			width: 350px;
 			height: 350px;
 		}
+
+		#instruct-text{
+			position: absolute;
+			margin: auto;
+			color: red;
+			font-weight: bold;
+			font-size: 20px;
+			bottom: 500px;
+			left: 0px;
+			right: 0px;
+		}
 	</style>
 
 </head>
+
 <body class="global">
 	<div id="loading">
 		<div id="loadingpic"></div>
@@ -149,13 +161,23 @@
 
 	</div>
 	<div id="game_box" style="position: relative;">
-		<img src="image/human.png" alt="instructHuman" class="instruct">
+		<div id="instruct">
+			<p id="instruct-text">PC画面を垂直にして、 \n この画像に体を当てはめてください</p>
+			<img src="image/human.png" alt="instructHuman" id="instruct-image">
+		</div>
 		<div id='main' style='display:none'>
 			<video id="video"></video>
 		</div>
 		<canvas id="output">
 	</div>
 	<script src="camera.ts"></script>
+	<script>
+		var deleteInstruct = function(){
+			console.log("delete instruct")
+			document.getElementById("instruct").style.display = "none";
+		}
+		 setTimeout(deleteInstruct, 10000);
+	</script>
 </body>
 
 </html>
