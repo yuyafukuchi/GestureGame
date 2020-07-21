@@ -146,6 +146,13 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
     if (points) {
       gameState.update(points, ctx);
     }
+
+    const remainingTime = gameState.getRemainingTime()
+    // ゲーム終了かどうかを判断
+    if (remainingTime <= 0){
+      utils.jumpToResultPage(gameState.score)
+    }
+
     // End monitoring code for frames per second
     stats.end();
     requestAnimationFrame(poseDetectionFrame);

@@ -12,7 +12,7 @@
 			color:#FFFFFF;
 		}
 
-		.global{		
+		.global{
 			margin: 0px;
 			padding-top: 30px; /*812*375*/
 			/*width: 812px;*/
@@ -47,7 +47,7 @@
 			border-radius:5px;
 			/*margin-top: 15px;*/
 
-			}		
+			}
 
 		#title_box{
 			/*background-color: red;*/
@@ -96,21 +96,7 @@
 		}
 	</style>
 	<script type="text/javascript">
-
-		
-
-		function countDown(){
-			t=1000;
-			var i=setInterval("document.getElementById('cdnum').innerHTML--;", t);
-			// setTimeout(function() { clearInterval( i );} , 3000);
-			showresult();
-			// //auto jump to 
-			var j=setTimeout(function() { clearInterval( i ); 
-				jump();}, 3000); 
-
-		}
         function showresult()  
-
         {  
             var url=location.href;  
             var tmp1=url.split("?")[1];  
@@ -118,24 +104,12 @@
             var tmp3=tmp2.split("=")[1];  
             var param1=tmp3;  
             document.getElementById('value').innerHTML=decodeURI(param1);
-		}
-
-		function jump()  
-        {   var url=location.href;  
-            var tmp1=url.split("?")[1];  
-            var tmp2=tmp1.split("&")[1];  
-            var tmp3=tmp2.split("=")[1];  
-            var param2=tmp3;  
-			var lv=decodeURI(param2)
-            var myurl="Gaming.html"+"?"+"parm1="+lv;  
-            window.location.assign(encodeURI(myurl));  
-        } 
+		} 
 	</script>
 
 </head>
-<!-- onload="countDown()" -->
-<body class="global" onload="countDown()">
-	<div id="home"> 
+<body class="global" onload="showresult()">
+	<div id="home">
 		<a href="index.html">Home</a>
 	</div>
 	<div id="score_box">
@@ -146,8 +120,8 @@
 			<div id="value"> 9999 </div>
 		</div>
 		<div id="countdown_circle">
-			<div id="cdnum"> 3 </div>
+			<div id="cdnum"> retry </div>
 		</div>
 	</div>
-</body>	
+</body>
 </html>
