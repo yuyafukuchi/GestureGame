@@ -30,7 +30,7 @@ export function addCircle(ctx: CanvasRenderingContext2D, circle: Circle) {
     ctx.fill();
   }
 
-export function jumpToResultPage(point: number) {  
-    var myurl="result.html"+"?"+"parm1="+point;  //pass scores and current lv
-    window.location.assign(encodeURI(myurl));  
+export function jumpToResultPage(point: number) {
+    var myurl = "Result.html" + "?" + "parm1=" + point;  //pass scores and current lv
+    window.location.assign(encodeURI(myurl));
 }
