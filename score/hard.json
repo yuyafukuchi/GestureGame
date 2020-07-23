@@ -15,14 +15,26 @@
         },
         {
             "start": 3000,
-            "end": 6000,
+            "end": 5000,
             "circleNumber": 4,
+            "point": 100
+        },
+        {
+            "start": 4000,
+            "end": 6000,
+            "circleNumber": 8,
             "point": 100
         },
         {
             "start": 5000,
             "end": 8000,
             "circleNumber": 3,
+            "point": 100
+        },
+        {
+            "start": 6000,
+            "end": 9000,
+            "circleNumber": 1,
             "point": 100
         },
         {
@@ -45,20 +57,26 @@
         },
         {
             "start": 13000,
-            "end": 16000,
+            "end": 15000,
             "circleNumber": 5,
             "point": 100
         },
         {
             "start": 14000,
-            "end": 17000,
+            "end": 16000,
             "circleNumber": 7,
             "point": 100
         },
         {
             "start": 16000,
-            "end": 19000,
+            "end": 18000,
             "circleNumber": 8,
+            "point": 100
+        },
+        {
+            "start": 16000,
+            "end": 18000,
+            "circleNumber": 9,
             "point": 100
         },
         {
@@ -104,9 +122,21 @@
             "point": 100
         },
         {
+            "start": 24000,
+            "end": 27000,
+            "circleNumber": 3,
+            "point": 100
+        },
+        {
             "start": 26000,
             "end": 28000,
             "circleNumber": 7,
+            "point": 100
+        },
+        {
+            "start": 29000,
+            "end": 32000,
+            "circleNumber": 1,
             "point": 100
         },
         {
@@ -156,7 +186,13 @@
             "end": 44000,
             "circleNumber": 5,
             "point": 100
-        },   
+        },  
+        {
+            "start": 41000,
+            "end": 45000,
+            "circleNumber": 4,
+            "point": 100
+        },    
         {
             "start": 46000,
             "end": 47000,
