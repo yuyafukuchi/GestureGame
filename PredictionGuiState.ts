@@ -19,8 +19,8 @@ export class PredictionGuiState {
 }
 
 // NN type to use for prediction
-const defaultArchitecture: posenet_types.PoseNetArchitecture = "MobileNetV1";
-//const defaultArchitecture: posenet_types.PoseNetArchitecture = 'ResNet50';
+// const defaultArchitecture: posenet_types.PoseNetArchitecture = "MobileNetV1";
+const defaultArchitecture: posenet_types.PoseNetArchitecture = 'ResNet50';
 
 ///////////// MobileNet Configs //////////////////////
 // Select from 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800
