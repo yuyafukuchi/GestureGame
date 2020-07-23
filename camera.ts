@@ -161,6 +161,33 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
   poseDetectionFrame();
 }
 
+function sleep(ms = 0) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+// after 10 seconds, delete human icon
+async function instruction(video: HTMLVideoElement) {
+  const canvas = <HTMLCanvasElement>document.getElementById('output');
+  const ctx = canvas.getContext('2d');
+  canvas.width = videoWidth;
+  canvas.height = videoHeight;
+
+  while(true) {
+    ctx.clearRect(0, 0, videoWidth, videoHeight);
+
+    // Show video
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.translate(-videoWidth, 0);
+    ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+    ctx.restore();
+  }
+
+  document.getElementById("instruct").style.display = "none";
+  // await sleep(10000);
+  return 1
+}
+
 /**
  * Kicks off the demo by loading the posenet model, finding and loading
  * available camera devices, and setting off the detectPoseInRealTime function.
@@ -182,6 +209,8 @@ export async function bindPage() {
   setupGui([], net);
   setupFPS();
   toggleLoadingUI(false);
+
+  await instruction(video)
 
   const params = new URLSearchParams(window.location.search);
   const level = params.get('level').toLowerCase();
