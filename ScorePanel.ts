@@ -15,6 +15,6 @@ export class ScorePanel {
     }
 
     public set time(v: number) {
-        this.timeBox.innerText = v > 0 ? Math.round(v).toString() : 'End';
+        this.timeBox.innerText = isNaN(v) ? "" : (v > 0 ? Math.round(v).toString() : 'End');
     }
 }
