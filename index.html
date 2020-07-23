@@ -4,106 +4,130 @@
 	<meta charset="UTF-8">
 	<meta name= "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
 	<title>Home</title>
+
 	<style type="text/css">
 		.global{
 			margin: 0px;
-/*			width: 812px;
-			height: 375px; */
-			padding-top: 50px;
 			padding-bottom: 0px;
-
-			background-image: url(./image/bgimage2.jpg);/*背景图片*/
-			/*background-repeat: no-repeat;*//*重复方式*/
-			background-size: contain; /*图片填充*/
+			background-image: url(./image/bgimage2.jpg);/*background image*/
+			background-size: contain; 
 		}
+
 		a:link, a:visited {
 			text-decoration: none;
 			color:#FFFFFF;
 		}
+
+		#top_bar{
+			height: 40px;
+			/*background-color: red;'*/
+			padding-top: 10px;
+			padding-left: 10px;
+		}
+		.top_button{
+			height: 37px;
+			width: 40px;
+			margin-right: 10px;
+			padding-top: 3px;
+			float:left;
+			box-shadow: darkgrey 0px 0px 3px;
+			border-radius:5px;
+			background-color: #82ECEE;
+			color: #FFFFFF;
+			text-align: center;
+			font-style: bold;
+			font-size: 25px;
+			border:1px solid #7F7F7F;
+		}
+		.top_button:active{
+			background-color: #9BFF8D;
+		}
+
 		#game_icon{
 			margin: auto;
 			/*background-color: blue;*/
-			height: 160px;
-			width: 300px;
+			height: 130px;
+			width: 250px;
 			margin-bottom: 30px;
 			background-image: url(./image/title_image.png);
-			background-size: contain;
+			background-size: cover;
 			background-repeat: no-repeat;
 		}
+
 		#diffi_part{
 			/*background-color: red;*/
 			margin: auto;
-			height: 200px;
+			height: 180px;
 			width: 116px;
-
-			/*padding: 0px 340px;*/
 		}
 		.diffi_button{			
-			height: 33px;
+			height: 35px;
 			width: 116px;
-			margin: 8px;
-			padding-top: 7px;
+			margin: 20px 0px;
+			padding-top: 5px;
 			box-shadow: darkgrey 0px 0px 3px 3px;
 			border-radius:5px;
-			background-color: blue;
 			color: #FFFFFF;
 			text-align: center;
+			font-family:  Consolas, monaco, monospace;
 			font-weight: bold;
+			font-size: 20px;
 		}
-		.diffi_button:active{
-			background-color: #20FFFF;
-		}
-
 		#easy{
 			background-color: #4BF46D;
+		}	
+		#easy:active{
+			background-color: #9BFF8D;
 		}
 		#normal{
 			background-color: #FEB65C;
 		}
+		#normal:active{
+			background-color: #FEC998;
+		}
 		#hard{
 			background-color: #FC4C57;
 		}
+		#hard:active{
+			background-color: #FD838B;
+		}
 	</style>
-	<script type="text/javascript">
-		function jump(diff) {
-			var num = diff;
-			var myurl = "Gaming.html" + "?" + "level=" + num;
-			window.location.assign(encodeURI(myurl));
-		}
-
-		function difficulty(diff) {
-			// var start=new Date().getTime();
-			// while(new Date().getTime()<start+1000);//delay for 1s
-			var num = diff;
-			if (num == 1) { alert("Lv: Easy"); jump('easy'); }
-			if (num == 2) { alert("Lv: Normal"); jump('normal'); }
-			if (num == 3) { alert("Lv: Hard"); jump('hard'); }
-		}
-	</script>
 </head>
+
 <body class="global">
-		<div id="game_icon"></div>
+	<!-- onload="play_bgm()" -->
+	<!-- start bgm after loading-->
+	<div id="top_bar">
+		<a href="HowToPlay.html">
+			<div class="top_button" id="HowToPlay">
+				?
+			</div>
+		</a>
+	</div>
+	<div id="game_icon"></div>
 	<div id="diffi_part">
-		<div class="diffi_button" id="easy" onclick="difficulty(1)"> <!-- button easy -->
-			Easy
-			<a href="#"></a> <!-- link if needed -->
-		</div>
+		<!-- button easy -->
+		<a href="./Gaming.html?level=easy">
+			<div class="diffi_button" id="easy">
+				Easy
+			</div>
+		</a>
 
-		<div class="diffi_button" id="normal" onclick="difficulty(2)"> <!-- button normal -->
-			Normal
-			<a href="#"></a>
-		</div>
-	
-		<div class="diffi_button" id="hard" onclick="difficulty(3)"> <!-- button hard -->
-			Hard
-			<a href="#"></a>
-		</div>
+		<!-- button normal -->
+		<a href="./Gaming.html?level=normal">
+			<div class="diffi_button" id="normal">
+				Normal
+			</div>
+		</a>
 
-		<div class="diffi_button">
-			<a href="HowToPlay.html">How To Play</a>
-		</div>
-
+		<!-- button hard -->
+		<a href="./Gaming.html?level=hard">
+			<div class="diffi_button" id="hard">
+				Hard
+			</div>
+		</a>
 	</div>
 </body>
 </html>

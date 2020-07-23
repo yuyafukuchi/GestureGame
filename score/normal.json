@@ -2,39 +2,158 @@
     "data": 
     [
         {
-            "start": 3400,
-            "end": 3500,
+            "start": 2000,
+            "end": 4000,
             "circleNumber": 1,
             "point": 100
         },
         {
-            "start": 3500,
-            "end": 3600,
-            "circleNumber": 2,
+            "start": 4000,
+            "end": 6000,
+            "circleNumber": 7,
             "point": 100
         },
         {
-            "start": 3600,
-            "end": 3700,
+            "start": 5000,
+            "end": 8000,
             "circleNumber": 3,
             "point": 100
         },
         {
-            "start": 3400,
-            "end": 3500,
+            "start": 8000,
+            "end": 10000,
+            "circleNumber": 4,
+            "point": 100
+        },
+        {
+            "start": 10000,
+            "end": 12000,
+            "circleNumber": 8,
+            "point": 100
+        },
+        {
+            "start": 13000,
+            "end": 16000,
+            "circleNumber": 5,
+            "point": 100
+        },
+        {
+            "start": 14000,
+            "end": 17000,
+            "circleNumber": 7,
+            "point": 100
+        },
+        {
+            "start": 18000,
+            "end": 21000,
+            "circleNumber": 2,
+            "point": 100
+        },
+        {
+            "start": 18000,
+            "end": 20000,
+            "circleNumber": 9,
+            "point": 100
+        },        
+        {
+            "start": 20000,
+            "end": 22000,
+            "circleNumber": 2,
+            "point": 100
+        },
+        {
+            "start": 22000,
+            "end": 24000,
             "circleNumber": 1,
             "point": 100
         },
         {
-            "start": 3400,
-            "end": 3500,
+            "start": 24000,
+            "end": 27000,
+            "circleNumber": 6,
+            "point": 100
+        },
+        {
+            "start": 24000,
+            "end": 26000,
+            "circleNumber": 8,
+            "point": 100
+        },
+        {
+            "start": 26000,
+            "end": 28000,
+            "circleNumber": 7,
+            "point": 100
+        },
+        {
+            "start": 30000,
+            "end": 32000,
+            "circleNumber": 3,
+            "point": 100
+        },
+        {
+            "start": 33000,
+            "end": 37000,
+            "circleNumber": 8,
+            "point": 100
+        },
+        {
+            "start": 34000,
+            "end": 38000,
+            "circleNumber": 4,
+            "point": 100
+        },
+        {
+            "start": 34000,
+            "end": 39000,
+            "circleNumber": 5,
+            "point": 100
+        },
+        {
+            "start": 40000,
+            "end": 42000,
+            "circleNumber": 7,
+            "point": 100
+        },
+        {
+            "start": 41000,
+            "end": 44000,
+            "circleNumber": 1,
+            "point": 100
+        },        {
+            "start": 46000,
+            "end": 48000,
+            "circleNumber": 3,
+            "point": 100
+        },
+        {
+            "start": 48000,
+            "end": 50000,
+            "circleNumber": 6,
+            "point": 100
+        },
+        {
+            "start": 50000,
+            "end": 52000,
+            "circleNumber": 2,
+            "point": 100
+        },
+        {
+            "start": 51000,
+            "end": 53000,
             "circleNumber": 1,
             "point": 100
         },
         {
-            "start": 3400,
-            "end": 3500,
-            "circleNumber": 1,
+            "start": 52000,
+            "end": 54000,
+            "circleNumber": 4,
+            "point": 100
+        },
+        {
+            "start": 55000,
+            "end": 58000,
+            "circleNumber": 9,
             "point": 100
         }
     ] 

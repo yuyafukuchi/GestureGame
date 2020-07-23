@@ -95,23 +95,9 @@
 
 		}
 	</style>
-	<script type="text/javascript">
-        function showresult()  
-        {  
-            var url=location.href;  
-            var tmp1=url.split("?")[1];  
-            var tmp2=tmp1.split("&")[0];  
-            var tmp3=tmp2.split("=")[1];  
-            var param1=tmp3;  
-            document.getElementById('value').innerHTML=decodeURI(param1);
-		} 
-	</script>
-
+	<script src="./result.ts"></script>
 </head>
-<body class="global" onload="showresult()">
-	<div id="home">
-		<a href="index.html">Home</a>
-	</div>
+<body class="global">
 	<div id="score_box">
 		<div id="title_box">
 			<p id="title"> Scores </p>
@@ -119,9 +105,27 @@
 		<div id="value_box">
 			<div id="value"> 9999 </div>
 		</div>
-		<div id="countdown_circle">
-			<div id="cdnum"> retry </div>
-		</div>
+		<a href="index.html">
+			<div id="countdown_circle">
+				<div id="cdnum"> Home </div>
+			</div>
+		</a>
 	</div>
+
+<!-- facebook and twitter sharing buttons -->
+<div id="share" style="width: 150px;">
+	<!-- FB -->
+	<div class="fb-share-button" data-href="https://github.com/yuyafukuchi/GestureGame" data-layout="button" data-size="large" data-lang="en" id="fb_button">
+		<a id="fb_button" target="_blank" class="fb-xfbml-parse-ignore">Facebook</a>
+	</div>
+	<div id="fb-root"></div>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0" nonce="bE6145wp"></script>
+
+	<!-- TW -->
+	<a href="https://twitter.com/share?&amp;lang=en&amp;text=I%20got%20a High%20Score%20in%20#TTR#,%20let's%20play%20it!&amp;url=https%3a%2f%2fgithub.com%2fyuyafukuchi%2fGestureGame&amp;counturl=" title="iSpring on Twitter" class="twitter-hashtag-button" data-size="large" data-text="I got a High Score in #TTR#, let's play it!" id="tw_button" data-lang="en" data-show-count="false">Tweet #post</a>
+	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+	</div>
+	
 </body>
 </html>

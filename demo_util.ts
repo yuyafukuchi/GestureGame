@@ -97,3 +97,7 @@ export function drawKeypoints(keypoints: posenet.Keypoint[], minConfidence: numb
     drawPoint(ctx, y * scale, x * scale, 3, color);
   }
 }
+
+export async function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

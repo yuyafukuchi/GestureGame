@@ -13,8 +13,6 @@
 		}
 
 		.global{
-			/* margin: 0px; 
-			padding: 0px; */
 			background-color: #FFFFFF;
 			display: flex;
 			flex-direction: row;
@@ -28,6 +26,28 @@
 		#pause_button{
 			height: 10%;
 			background-color: red;
+		}
+
+
+		#instruct-image{
+			position: absolute;
+			margin: auto;
+			bottom: 0px;
+			left: 0px;
+			right: 0px;
+			width: 600px;
+			height: 600px;
+		}
+
+		#instruct-text{
+			position: absolute;
+			margin: auto;
+			color: red;
+			font-weight: bold;
+			font-size: 20px;
+			bottom: 500px;
+			left: 0px;
+			right: 0px;
 		}
 
 		.btn{
@@ -91,6 +111,23 @@
 			color: #ffffff;
 		}
 
+        #test_float {
+            background-color: transparent;
+            width: 900px;
+            height: 200px;
+            position: fixed;
+			top: 50%;
+			margin: auto;
+        }
+
+		#cdnum{
+			text-align: center;
+			color: #FFFFFF;
+			font-family:Gill Sans, sans-serif;
+			font-size: 80px;
+			font-weight: 700;
+		}
+
 		.score-rectangle {
 			display: table;
 			width: 180px;
@@ -138,16 +175,26 @@
 
 </head>
 <body class="global">
-	<div id="game_box">
+	<div id="loading">
+		<div id="loadingpic"></div>
+		<div id="word">Loading...</div>
+	</div>
+
+	<div id="game_box" style="position: relative;">
+		<div id="instruct">
+			<div id="instruct-text">
+			</div>
+			<img src="image/human.png" alt="instructHuman" id="instruct-image">
+		</div>
+		<div id="test_float">
+			<div id="cdnum">3</div>
+		</div>
 		<div id='main' style='display:none'>
 			<video id="video"></video>
 		</div>
 		<canvas id="output">
 	</div>
-	<div id="loading">
-		<div id="loadingpic"></div>
-		<div id="word">Loading...</div>	
-	</div>
+
 	<div class="board">
 		<p font>Remaining Time</p>
 		<div class="time-rectangle">  
@@ -162,6 +209,7 @@
 			<p id="mode">1</p>
 		<div/>
 	</div>
+
 	<script src="camera.ts"></script>
 </body>
 

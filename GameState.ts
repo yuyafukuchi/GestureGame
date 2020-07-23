@@ -16,6 +16,7 @@ export class GameState {
         this.score = 0;
         this.scorePanel = scorePanel;
         this.gameTime = gameTime;
+        this.startTime = NaN;
     }
 
     public start(): void {
@@ -37,7 +38,7 @@ export class GameState {
             this.score += target.update(ctx, hands, currentTime);
         });
         this.scorePanel.score = this.score;
-        this.scorePanel.time = (this.startTime + this.gameTime - currentTime) / 1000;
+        this.scorePanel.time = (this.gameTime - currentTime) / 1000;
         console.log(this.score);
     }
 

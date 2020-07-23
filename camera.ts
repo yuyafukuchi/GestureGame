@@ -20,7 +20,7 @@ import * as utils from "./util"
 import { PredictionGuiState } from './PredictionGuiState'
 import Stats = require('stats.js')
 
-import { drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI } from './demo_util';
+import { drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, sleep } from './demo_util';
 import { GameState } from './GameState'
 import { Score } from './Score'
 import { ScorePanel } from './ScorePanel'
@@ -161,6 +161,18 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
   poseDetectionFrame();
 }
 
+async function countDownForStart() {
+  const counter = <HTMLDivElement>document.getElementById("cdnum");
+  const instruction = <HTMLDivElement>document.getElementById("instruct");
+  for (let i = 10; i > 0; i--) {
+    counter.innerHTML = String(i);
+    console.log(i);
+    await sleep(1000);
+  }
+  instruction.style.display = "none";
+  counter.innerHTML = "";
+}
+
 /**
  * Kicks off the demo by loading the posenet model, finding and loading
  * available camera devices, and setting off the detectPoseInRealTime function.
@@ -198,8 +210,10 @@ export async function bindPage() {
     gameState.addTarget(new utils.Circle(centerX - alignR * Math.sin(Math.PI / 5 * i),
       centerY + alignR * Math.cos(Math.PI / 5 * i), 50), filtered);
   }
-  gameState.start();
+
   detectPoseInRealTime(video, net, gameState);
+  await countDownForStart();
+  gameState.start();
 }
 
 navigator.getUserMedia = navigator.getUserMedia;
