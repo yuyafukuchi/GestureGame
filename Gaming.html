@@ -13,13 +13,35 @@
 		}
 
 		.global{
-			margin: 0px; 
+			margin: 0px;
 			padding: 0px;
 			background-color: #FFFFFF;
 		}
 		#pause_button{
 			height: 10%;
 			background-color: red;
+		}
+
+
+		#instruct-image{
+			position: absolute;
+			margin: auto;
+			bottom: 0px;
+			left: 0px;
+			right: 0px;
+			width: 600px;
+			height: 600px;
+		}
+
+		#instruct-text{
+			position: absolute;
+			margin: auto;
+			color: red;
+			font-weight: bold;
+			font-size: 20px;
+			bottom: 500px;
+			left: 0px;
+			right: 0px;
 		}
 
 		.btn{
@@ -48,7 +70,7 @@
 
 		#remaining_time{
 			float:right;
-			border-radius: 5px 0 0 5px; 
+			border-radius: 5px 0 0 5px;
 		}
 		#game_box{
 			margin: auto;
@@ -138,18 +160,23 @@
 		<div id="word">Loading...</div>
 	</div>
 	<div id="upper_bar">
-		
+
 		<div class="figure">
 			<img src="image/scoreboard.png" alt="scoreboard">
 			<p id="score">0</p>
 			<p id="mode">1</p>
 			<p id="remaining_time">0</p>
 		</div>
-		
+
 		<!-- <div id="pause_btn"> pause</div> -->
-		
+
 	</div>
-	<div id="game_box">
+	<div id="game_box" style="position: relative;">
+		<div id="instruct">
+			<div id="instruct-text">
+			</div>
+			<img src="image/human.png" alt="instructHuman" id="instruct-image">
+		</div>
 		<div id="test_float">
 			<div id="cdnum">3</div>
 		</div>

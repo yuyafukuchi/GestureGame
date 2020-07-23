@@ -163,11 +163,13 @@ function detectPoseInRealTime(video: HTMLVideoElement, net: posenet.PoseNet, gam
 
 async function countDownForStart() {
   const counter = <HTMLDivElement>document.getElementById("cdnum");
-  for (let i = 5; i > 0; i--) {
+  const instruction = <HTMLDivElement>document.getElementById("instruct");
+  for (let i = 10; i > 0; i--) {
     counter.innerHTML = String(i);
     console.log(i);
     await sleep(1000);
   }
+  instruction.style.display = "none";
   counter.innerHTML = "";
 }
 
