@@ -13,10 +13,16 @@
 		}
 
 		.global{
-			margin: 0px;
-			padding: 0px;
 			background-color: #FFFFFF;
+			display: flex;
+			flex-direction: row;
 		}
+
+		p {
+			font-size: 24px;
+			font-family:  Consolas, monaco, monospace;
+		}
+
 		#pause_button{
 			height: 10%;
 			background-color: red;
@@ -56,10 +62,6 @@
 			font-weight: bold;
 
 		}
-		#score_box{
-			float: left;
-			border-radius: 0 5px 5px 0;
-		}
 
 		#pause_btn{
 			height: 30px;
@@ -68,21 +70,15 @@
 			background-color: red;
 		}
 
-		#remaining_time{
-			float:right;
-			border-radius: 5px 0 0 5px;
-		}
 		#game_box{
-			margin: auto;
-/*			width: 600px;
-			height: 350px;*/
+			margin: 5% auto;
+			display: inline-block;
+			position: relative;
 			margin-top: 1%;
-			/* padding-bottom: 40%; */
 			width: 900px;
 			height: 750px;
-			border: 3px solid blue;
+			border: 4px solid black;
 			text-align: center;
-			font-size: 50px;
 		}
 
 		#loadingpic{
@@ -91,8 +87,28 @@
 			height: 60px;
 			width: 60px;
 			background-image: url(./image/loading.png);
-			background-repeat: no-repeat;/*重复方式*/
-			background-size: contain; /*图片填充*/
+			background-repeat: no-repeat;
+			background-size: contain; 
+		}
+		.board {
+			display: flex;
+			flex-direction: column;
+			margin-right: 36px;
+		}
+
+		.mode-rectangle {
+			display: table;
+			width: 180px;
+			height: 140px;
+			box-shadow: 2px 2px 6px rgba(0,0,0,.4);
+			background: #333333;
+		}
+		.mode-rectangle #mode {
+			font-size: 40px;
+			display: table-cell;
+ 			vertical-align: middle;	
+			text-align: center;
+			color: #ffffff;
 		}
 
         #test_float {
@@ -112,29 +128,33 @@
 			font-weight: 700;
 		}
 
-		.figure #mode {
-			position: absolute;
-			top: 45px;
-			left: 650px;
-			font-size: 30px;
+		.score-rectangle {
+			display: table;
+			width: 180px;
+			height: 140px;
+			box-shadow: 2px 2px 6px rgba(0,0,0,.4);
+			background: #333333;
 		}
-
-		.figure #score {
-			position: absolute;
-			top: -10px;
-			left: 650px;
-			font-size: 30px;
+		.score-rectangle #score {
+			font-size: 40px;
+			display: table-cell;
+ 			vertical-align: middle;	
+			text-align: center;
+			color: #ffffff;
 		}
-
-		.figure #remaining_time {
-			position: absolute;
-			top: -35px;
-			left: 250px;
-			font-size: 60px;
+		.time-rectangle {
+			display: table;
+			width: 180px;
+			height: 180px;
+			box-shadow: 2px 2px 6px rgba(0,0,0,.4);
+			background: #3F51B5;
 		}
-
-		.figure img {
-			width: 750px;
+		.time-rectangle #remaining_time {
+			font-size: 80px;
+			display: table-cell;
+ 			vertical-align: middle;	
+			text-align: center;
+			color: #ffffff;
 		}
 
 		#word{
@@ -159,18 +179,7 @@
 		<div id="loadingpic"></div>
 		<div id="word">Loading...</div>
 	</div>
-	<div id="upper_bar">
 
-		<div class="figure">
-			<img src="image/scoreboard.png" alt="scoreboard">
-			<p id="score">0</p>
-			<p id="mode">1</p>
-			<p id="remaining_time">0</p>
-		</div>
-
-		<!-- <div id="pause_btn"> pause</div> -->
-
-	</div>
 	<div id="game_box" style="position: relative;">
 		<div id="instruct">
 			<div id="instruct-text">
@@ -185,6 +194,22 @@
 		</div>
 		<canvas id="output">
 	</div>
+
+	<div class="board">
+		<p font>Remaining Time</p>
+		<div class="time-rectangle">  
+			<p id="remaining_time">0</p>
+		</div>
+		<p font>Score</p>
+		<div class="score-rectangle"> 
+			<p id="score">0</p>
+		</div>
+		<p font>Mode</p>
+		<div class="mode-rectangle"> 
+			<p id="mode">1</p>
+		<div/>
+	</div>
+
 	<script src="camera.ts"></script>
 </body>
 
